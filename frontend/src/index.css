@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FAF6F0;
+    color: #1E2A38;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Custom Artisan Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F2EBE1;
+}
+::-webkit-scrollbar-thumb {
+  background: #DE8868;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C85A32;
+}
+
+/* Shimmer & Craft Pulse Animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(200, 90, 50, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(232, 152, 67, 0.5);
+  }
+}
+
+.craft-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Image comparison slider helper */
+.slider-handle {
+  touch-action: none;
+}
