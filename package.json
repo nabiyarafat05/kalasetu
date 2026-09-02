@@ -10,7 +10,18 @@
     "test:api": "node backend/tests/api.test.js",
     "build:frontend": "cd frontend && npm run build"
   },
-  "keywords": ["artisan", "ai", "fairtrade", "kalasetu", "handicrafts"],
+  "keywords": [
+    "artisan",
+    "ai",
+    "fairtrade",
+    "kalasetu",
+    "handicrafts"
+  ],
   "author": "KalaSetu Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4"
+  }
 }
