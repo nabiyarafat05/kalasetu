@@ -1,33 +1,34 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import { Sparkles, Heart, ShieldCheck } from 'lucide-react';
 
 export const Footer = () => {
-  const { lang } = useLanguage();
-
   return (
-    <footer className="mt-16 bg-white border-t border-terracotta-100 py-8 px-4 text-center">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-        
-        {/* Left Brand */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🪔</span>
-          <span className="font-serif font-extrabold text-terracotta-700 text-sm">KalaSetu (कला सेतु)</span>
-          <span className="text-gray-400">| Empowering Indian Artisans</span>
+    <footer className="mt-16 border-t border-terracotta-100 bg-white px-4 pt-10 pb-5">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+        <div className="sm:max-w-xs">
+          <p className="font-serif text-xl font-extrabold text-terracotta-700">Kalasetu</p>
+          <p className="mt-2 text-sm leading-6 text-gray-500">
+            Digital commerce without digital complexity
+          </p>
         </div>
 
-        {/* Middle Fair Trade Badge */}
-        <div className="flex items-center gap-1.5 text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 font-semibold">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>Fair Trade Certified & Multilingual AI</span>
-        </div>
+        <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-sm text-indigoClay-700">
+          <p className="mb-1 font-semibold text-indigoClay-900">Quick links</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <a href="#home" className="transition hover:text-terracotta-600">Home</a>
+            <a href="#browse-products" className="transition hover:text-terracotta-600">Browse Products</a>
+            <a href="#about" className="transition hover:text-terracotta-600">About</a>
+            <a href="#contact" className="transition hover:text-terracotta-600">Contact</a>
+          </div>
+        </nav>
 
-        {/* Right Heart note */}
-        <div className="flex items-center gap-1">
-          <span>Crafted with</span>
-          <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" />
-          <span>for Indian Micro-Entrepreneurs</span>
+        <div className="text-sm text-gray-500 sm:text-right">
+          <p className="font-semibold text-indigoClay-900">Built for Smart India Hackathon 2026</p>
+          <p className="mt-2">Team CodeDiggers</p>
         </div>
+      </div>
+
+      <div className="mx-auto mt-8 max-w-7xl border-t border-terracotta-100 pt-4 text-center text-xs text-gray-400">
+        © 2026 Kalasetu. All rights reserved.
       </div>
     </footer>
   );
