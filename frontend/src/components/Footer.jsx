@@ -1,34 +1,87 @@
-import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import { Sparkles, Heart, ShieldCheck } from 'lucide-react';
+  import "./Footer.css";
 
-export const Footer = () => {
-  const { lang } = useLanguage();
+ export function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <footer className="mt-16 bg-white border-t border-terracotta-100 py-8 px-4 text-center">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-        
-        {/* Left Brand */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🪔</span>
-          <span className="font-serif font-extrabold text-terracotta-700 text-sm">KalaSetu (कला सेतु)</span>
-          <span className="text-gray-400">| Empowering Indian Artisans</span>
+    <>
+      <button className="back-to-top" onClick={scrollToTop}>
+        Back to top ↑
+      </button>
+
+      <footer className="site-footer">
+        <div className="footer-columns">
+          <div className="footer-col">
+            <h4>Get to Know Us</h4>
+            <ul>
+              <li><a href="#">About Artisan Hub</a></li>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Meet the Artisans</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4>For Artisans</h4>
+            <ul>
+              <li><a href="#">Artisan Dashboard</a></li>
+              <li><a href="#">Add New Product</a></li>
+              <li><a href="#">Fair Living Wage Policy</a></li>
+              <li><a href="#">Seller Support</a></li>
+              <li><a href="#">Craft Guidelines</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4>AI-Powered Tools</h4>
+            <ul>
+              <li><a href="#">AI Catalog Generator</a></li>
+              <li><a href="#">AI Image Enhancer</a></li>
+              <li><a href="#">AI Price Suggestion</a></li>
+              <li><a href="#">Instant Product Capture</a></li>
+              <li><a href="#">Voice Catalog (EN / हिन्दी)</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4>Connect With Us</h4>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Buyer Support</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
         </div>
 
-        {/* Middle Fair Trade Badge */}
-        <div className="flex items-center gap-1.5 text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 font-semibold">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>Fair Trade Certified & Multilingual AI</span>
+        <div className="footer-brand-row">
+          <div className="footer-brand">
+            🏺 Artisan Hub{" "}
+            <span className="badge">AI-Powered Digital Artisan Hub</span>
+          </div>
+
+          <div className="footer-locale">
+            <div className="locale-pill">🌐 English</div>
+            <div className="locale-pill">📍 Sanganer, Jaipur, Rajasthan</div>
+            <div className="locale-pill">₹ INR</div>
+          </div>
         </div>
 
-        {/* Right Heart note */}
-        <div className="flex items-center gap-1">
-          <span>Crafted with</span>
-          <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" />
-          <span>for Indian Micro-Entrepreneurs</span>
+        <div className="footer-bottom">
+          <span>© 2026 Artisan Hub. Digitizing handcrafted heritage worldwide.</span>
+          <span className="dot">•</span>
+          <a href="#">Privacy Policy</a>
+          <span className="dot">•</span>
+          <a href="#">Terms of Use</a>
+          <span className="dot">•</span>
+          <a href="#">Cookies</a>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
-};
+}
+

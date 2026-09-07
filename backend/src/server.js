@@ -4,6 +4,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const { connectDB, memoryStore, isConnectedToMongo } = require('./config/db');
 const Product = require('./models/Product');
+const { generateCatalog } = require('./controllers/aiController');
+const { protect } = require('./middleware/authMiddleware');
 const { seedInitialData } = require('./seeds/seedData');
 
 // Load environment variables
@@ -40,6 +42,9 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/favourites', favouriteRoutes);
 app.use('/api/artisans', artisanRoutes);
 app.use('/api/ai', aiRoutes);
+const catalogCompatibilityRoutes = express.Router();
+catalogCompatibilityRoutes.post(['/catalog', '/catalogue', '/catalouge'], protect, generateCatalog);
+app.use('/api', catalogCompatibilityRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

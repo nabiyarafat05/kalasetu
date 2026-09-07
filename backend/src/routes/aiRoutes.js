@@ -36,6 +36,8 @@ const upload = multer({
 });
 
 router.post('/catalog', protect, generateCatalog);
+router.post('/catalogue', protect, generateCatalog);
+router.post('/catalouge', protect, generateCatalog);
 router.post('/price-suggestion', protect, getPriceSuggestion);
 router.post('/enhance-image', protect, upload.single('image'), enhanceImage);
 
