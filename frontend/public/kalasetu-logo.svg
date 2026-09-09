@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">KalaSetu logo</title>
+  <desc id="desc">Brand mark featuring a sunrise over a bridge and the KalaSetu wordmark.</desc>
+  <defs>
+    <linearGradient id="sunGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFB033"/>
+      <stop offset="50%" stop-color="#F7A722"/>
+      <stop offset="100%" stop-color="#F27C2C"/>
+    </linearGradient>
+    <linearGradient id="bridgeGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#B7301D"/>
+      <stop offset="100%" stop-color="#8D2A17"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#B73978"/>
+      <stop offset="100%" stop-color="#7F2D6C"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <circle cx="420" cy="235" r="210" fill="url(#sunGrad)"/>
+
+    <g transform="translate(430 52)">
+      <g fill="#F4F1ED">
+        <path d="M0,-130 C34,-110, 40,-74, 0,-30 C-36,-72, -30,-100, 0,-130Z"/>
+        <path d="M48,-112 C78,-84, 90,-46, 58,-10 C24,-42, 26,-86, 48,-112Z"/>
+        <path d="M90,-66 C118,-30, 126,8, 94,42 C66,12, 60,-28, 90,-66Z"/>
+        <path d="M104,12 C132,42, 144,88, 112,122 C82,86, 76,34, 104,12Z"/>
+        <path d="M54,78 C82,110, 88,158, 52,188 C18,154, 18,104, 54,78Z"/>
+        <path d="M0,116 C30,146, 40,188, 0,224 C-40,188, -32,152, 0,116Z"/>
+      </g>
+      <g fill="#A6325A">
+        <path d="M0,-130 C26,-110, 32,-74, 0,-32 C-28,-74, -26,-108, 0,-130Z"/>
+        <path d="M48,-112 C78,-82, 88,-44, 58,-12 C28,-42, 30,-84, 48,-112Z"/>
+        <path d="M90,-66 C120,-28, 126,8, 94,42 C66,10, 60,-28, 90,-66Z"/>
+        <path d="M104,12 C132,42, 142,84, 112,122 C82,88, 76,34, 104,12Z"/>
+        <path d="M54,78 C82,112, 88,160, 52,188 C18,156, 20,108, 54,78Z"/>
+        <path d="M0,116 C28,146, 38,188, 0,224 C-38,188, -30,152, 0,116Z"/>
+      </g>
+      <g fill="#F6A533">
+        <path d="M0,-140 C22,-110, 26,-72, 0,-26 C-24,-72, -22,-104, 0,-140Z"/>
+        <path d="M42,-118 C70,-92, 78,-54, 48,-16 C22,-42, 22,-88, 42,-118Z"/>
+        <path d="M88,-80 C112,-48, 118,-12, 90,20 C62,-8, 56,-48, 88,-80Z"/>
+        <path d="M100,22 C126,52, 130,92, 104,122 C76,92, 72,50, 100,22Z"/>
+        <path d="M48,82 C74,110, 82,154, 52,182 C20,156, 20,110, 48,82Z"/>
+        <path d="M0,118 C24,144, 32,182, 0,220 C-30,182, -24,148, 0,118Z"/>
+      </g>
+    </g>
+
+    <g transform="translate(40 320)">
+      <path d="M 100 0 C 180 -10, 280 -12, 360 8 C 420 24, 510 30, 610 14 C 700 -2, 770 -8, 840 6 L 840 110 L 100 110 Z" fill="#9E3F76" opacity="0.82"/>
+      <path d="M 100 10 C 180 0, 290 0, 360 20 C 430 42, 500 44, 590 30 C 700 14, 780 18, 840 22 L 840 118 L 100 118 Z" fill="url(#waveGrad)"/>
+    </g>
+
+    <g transform="translate(120 280)">
+      <path d="M 58 86 C 110 16, 178 -10, 248 12 L 248 122 L 177 122 C 172 111, 160 92, 120 88 C 92 84, 72 94, 58 86 Z" fill="url(#bridgeGrad)"/>
+      <path d="M 208 88 C 260 18, 330 -10, 404 12 L 404 120 L 334 120 C 330 110, 316 92, 286 88 C 260 85, 235 95, 208 88 Z" fill="url(#bridgeGrad)"/>
+      <path d="M 360 90 C 412 18, 482 -10, 554 12 L 554 120 L 484 120 C 480 110, 468 92, 434 88 C 410 85, 382 95, 360 90 Z" fill="url(#bridgeGrad)"/>
+      <path d="M 514 90 C 566 18, 636 -10, 706 12 L 706 120 L 634 120 C 630 110, 618 92, 584 88 C 560 85, 534 95, 514 90 Z" fill="url(#bridgeGrad)"/>
+      <path d="M 120 170 C 170 136, 220 126, 270 140 L 270 206 L 120 206 Z" fill="url(#bridgeGrad)" opacity="0.98"/>
+      <path d="M 270 140 C 330 120, 360 116, 418 138 L 418 204 L 270 204 Z" fill="url(#bridgeGrad)" opacity="0.98"/>
+      <path d="M 418 138 C 478 114, 520 116, 584 140 L 584 204 L 418 204 Z" fill="url(#bridgeGrad)" opacity="0.98"/>
+      <path d="M 584 140 C 640 118, 692 130, 746 160 L 746 204 L 584 204 Z" fill="url(#bridgeGrad)" opacity="0.98"/>
+
+      <g stroke="#F8E5D4" stroke-width="10" fill="none" stroke-linecap="round">
+        <path d="M 60 180 L 207 180"/>
+        <path d="M 213 180 L 354 180"/>
+        <path d="M 362 180 L 508 180"/>
+        <path d="M 516 180 L 678 180"/>
+        <path d="M 686 180 L 740 180"/>
+      </g>
+
+      <g fill="#F5F0EA">
+        <rect x="115" y="80" width="18" height="100" rx="8"/>
+        <rect x="218" y="80" width="18" height="104" rx="8"/>
+        <rect x="332" y="80" width="18" height="102" rx="8"/>
+        <rect x="486" y="80" width="18" height="104" rx="8"/>
+        <rect x="635" y="80" width="18" height="102" rx="8"/>
+      </g>
+
+      <g fill="#F5F0EA" stroke="#F5F0EA" stroke-width="7">
+        <path d="M120 112 C 160 72, 188 72, 228 112"/>
+        <path d="M224 112 C 274 72, 304 72, 344 112"/>
+        <path d="M340 112 C 388 72, 420 72, 462 112"/>
+        <path d="M498 110 C 548 72, 578 72, 622 112"/>
+        <path d="M636 112 C 678 80, 700 80, 746 112"/>
+      </g>
+    </g>
+
+    <g transform="translate(90 0)">
+      <text x="530" y="610" fill="#9F2B1C" font-family="Georgia, 'Times New Roman', serif" font-size="250" font-weight="700" letter-spacing="-10">KalaSetu</text>
+      <text x="610" y="705" fill="#8A235A" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="600" letter-spacing="1">Bridging Indian Artisans to</text>
+      <text x="650" y="790" fill="#8A235A" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="600" letter-spacing="1">the Global Market</text>
+    </g>
+  </g>
+</svg>

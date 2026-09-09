@@ -117,8 +117,8 @@ export const Dashboard = ({ onNavigate, onSelectProduct, onEditProduct }) => {
       {/* 1. Artisan Welcome Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta-700 via-terracotta-600 to-sandalwood-500 text-white p-6 sm:p-8 shadow-xl">
         <div className="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
-        <div className="absolute right-10 top-0 text-white/10 text-9xl font-serif pointer-events-none select-none">
-          🪔
+        <div className="absolute right-8 top-2 text-white/10 pointer-events-none select-none flex items-center justify-center w-40 h-40">
+          <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain opacity-30" />
         </div>
 
         <div className="relative z-10 max-w-2xl">

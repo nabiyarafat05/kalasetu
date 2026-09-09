@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Sparkles, ArrowRight, ShieldCheck, UserCheck, Lock, Mail, Store, User } from 'lucide-react';
+import { ArrowRight, UserCheck, Lock, Mail, Store, User } from 'lucide-react';
 
 export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
   const { lang, t } = useLanguage();
@@ -49,8 +49,8 @@ export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
       
       {/* Brand Header */}
       <div className="text-center space-y-2">
-        <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-terracotta-600 to-sandalwood-400 flex items-center justify-center text-white text-3xl shadow-md">
-          🪔
+        <div className="w-20 h-20 mx-auto overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 flex items-center justify-center">
+          <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain" />
         </div>
         <h1 className="text-2xl font-serif font-extrabold text-terracotta-800">
           {t('login')}

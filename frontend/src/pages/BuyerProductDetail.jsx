@@ -115,8 +115,8 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan }) => {
             className="p-5 rounded-3xl bg-white border border-terracotta-200 shadow-craft hover:shadow-craft-hover cursor-pointer transition flex items-center justify-between group"
           >
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center font-serif text-xl font-bold border border-terracotta-300 flex-shrink-0">
-                🪔
+              <div className="w-12 h-12 rounded-2xl bg-terracotta-100 border border-terracotta-300 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Created by Master Artisan</span>

@@ -148,8 +148,8 @@ export const ProductDetail = ({ product, onBack, onEdit, onProductDeleted, onPro
 
           {/* Artisan Heritage Badge */}
           <div className="p-4 rounded-2xl bg-gradient-to-br from-khadi to-sandalwood-50/50 border border-terracotta-200 flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-terracotta-100 text-terracotta-700 flex items-center justify-center font-serif text-lg font-bold border border-terracotta-300 flex-shrink-0">
-              🪔
+            <div className="w-12 h-12 rounded-full bg-terracotta-100 border border-terracotta-300 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-2">

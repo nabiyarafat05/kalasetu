@@ -78,8 +78,8 @@ export const MarketplaceHome = ({ onSelectProduct, onSelectArtisan }) => {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta-800 via-indigoClay-900 to-terracotta-900 text-white p-6 sm:p-10 shadow-xl">
         {/* Background ambient lighting */}
         <div className="absolute right-0 top-0 w-96 h-96 rounded-full bg-sandalwood-500/10 blur-3xl pointer-events-none"></div>
-        <div className="absolute right-8 bottom-4 text-8xl text-white/5 font-serif select-none pointer-events-none">
-          🪔
+        <div className="absolute right-8 bottom-4 w-36 h-36 text-white/5 select-none pointer-events-none flex items-center justify-center">
+          <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain opacity-15" />
         </div>
 
         <div className="relative z-10 max-w-2xl space-y-4">

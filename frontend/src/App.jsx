@@ -8,7 +8,6 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
 
-// Pages
 import { Dashboard } from './pages/Dashboard';
 import { MarketplaceHome } from './pages/MarketplaceHome';
 import { AddProduct } from './pages/AddProduct';
@@ -39,11 +38,10 @@ import {
 
 function MainApp() {
   const { lang, t } = useLanguage();
-  const { user, isArtisan, isBuyer } = useAuth();
+  const { isArtisan } = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
   const { favCount } = useFavourite();
 
-  // Navigation state
   const [currentTab, setCurrentTab] = useState(isArtisan ? 'dashboard' : 'marketplace');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedArtisanId, setSelectedArtisanId] = useState(null);
@@ -51,48 +49,55 @@ function MainApp() {
   const [pendingDraft, setPendingDraft] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
-  // Navigation handlers
-  const handleNavigate = (tab, extraParams = {}) => {
-    if (extraParams.capturedImage) {
-      setCapturedImage(extraParams.capturedImage);
+  const goToTab = (tab, options = {}) => {
+    if ('capturedImage' in options) {
+      setCapturedImage(options.capturedImage);
       setProductToEdit(null);
     }
-    if (extraParams.product) {
-      setSelectedProduct(extraParams.product);
+    if ('product' in options) {
+      setSelectedProduct(options.product);
+    }
+    if ('artisanId' in options) {
+      setSelectedArtisanId(options.artisanId);
+    }
+    if ('draft' in options) {
+      setPendingDraft(options.draft);
+      setProductToEdit(options.draft);
     }
     setCurrentTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigate = (tab, extraParams = {}) => {
+    if (extraParams.capturedImage) {
+      goToTab(tab, { capturedImage: extraParams.capturedImage });
+      return;
+    }
+    if (extraParams.product) {
+      goToTab(tab, { product: extraParams.product });
+      return;
+    }
+    goToTab(tab);
+  };
+
   const handleSelectBuyerProduct = (product) => {
-    setSelectedProduct(product);
-    setCurrentTab('buyer-product-detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToTab('buyer-product-detail', { product });
   };
 
   const handleSelectArtisanProduct = (product) => {
-    setSelectedProduct(product);
-    setCurrentTab('product-detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToTab('product-detail', { product });
   };
 
   const handleSelectArtisan = (artisanId) => {
-    setSelectedArtisanId(artisanId);
-    setCurrentTab('artisan-profile');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToTab('artisan-profile', { artisanId });
   };
 
   const handleEditProduct = (product) => {
-    setProductToEdit(product);
-    setCurrentTab('add-product');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToTab('add-product', { draft: product });
   };
 
   const handleApplyAIToProduct = (draftData) => {
-    setPendingDraft(draftData);
-    setProductToEdit(draftData);
-    setCurrentTab('add-product');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToTab('add-product', { draft: draftData });
   };
 
   const handleProductSaved = (savedProduct) => {
@@ -111,10 +116,8 @@ function MainApp() {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-khadi font-sans selection:bg-terracotta-200">
       
-      {/* Top Navigation Bar */}
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
-      {/* Main Content View */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 md:pb-12 flex-1 w-full">
         
         {/* Marketplace Home (Buyer Discovery) */}
