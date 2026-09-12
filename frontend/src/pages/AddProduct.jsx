@@ -18,6 +18,7 @@ import {
   Layers,
   Image as ImageIcon
 } from 'lucide-react';
+import { validateProduct } from '../utils/validation';
 
 export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) => {
   const { lang, t } = useLanguage();
@@ -48,6 +49,7 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
   const [loading, setLoading] = useState(false);
   const [aiCatalogLoading, setAiCatalogLoading] = useState(false);
   const [aiPriceLoading, setAiPriceLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState(
     initialData?.enhancedImageUrl || initialData?.imageUrl || capturedImage || 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80'
   );
@@ -74,6 +76,7 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const handleFileChange = (e) => {
@@ -166,9 +169,12 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
   // Submit & Save Product
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
 
-    if (!formData.name || !formData.price) {
-      addToast(lang === 'hi' ? 'कृपया उत्पाद का नाम और मूल्य भरें' : 'Please fill product name and price', 'error');
+    const nextErrors = validateProduct(formData);
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      addToast(lang === 'hi' ? 'कृपया उत्पाद की त्रुटियां ठीक करें' : 'Please correct the product errors', 'error');
       return;
     }
 
@@ -176,9 +182,9 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
     try {
       let res;
       if (isEditing) {
-        res = await api.products.update(initialData.id || initialData._id, formData);
+        res = await api.products.update(initialData.id || initialData._id, { ...formData, name: formData.name.trim(), description: formData.description.trim() });
       } else {
-        res = await api.products.create(formData);
+        res = await api.products.create({ ...formData, name: formData.name.trim(), description: formData.description.trim() });
       }
 
       if (res.data?.success) {
@@ -330,6 +336,7 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
               placeholder="e.g. Royal Jaipur Blue Pottery Floral Vase"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-sm font-medium text-indigoClay-900"
             />
+            {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
           </div>
 
           <div>
@@ -404,6 +411,7 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
               placeholder="Describe your handicraft, design motifs, technique..."
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-xs sm:text-sm text-indigoClay-900"
             />
+            {errors.description && <p className="text-xs text-red-600 mt-1">{errors.description}</p>}
           </div>
 
           <div>
@@ -516,8 +524,10 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
               value={formData.price}
               onChange={handleInputChange}
               placeholder="1850"
+              max="100000000"
               className="w-full pl-9 pr-4 py-3 rounded-xl border border-sandalwood-300 font-extrabold text-lg text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 bg-white"
             />
+            {errors.price && <p className="text-xs text-red-600 mt-1">{errors.price}</p>}
           </div>
         </div>
 

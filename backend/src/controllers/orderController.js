@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const { isConnectedToMongo, memoryStore } = require('../config/db');
+const { normalizePhone, isValidPhone, isValidName, isPositiveNumber, isPositiveInteger, validateAddress } = require('../utils/validation');
 
 /**
  * Helper to generate order number
@@ -28,12 +29,16 @@ const createOrder = async (req, res) => {
       notes = ''
     } = req.body;
 
-    if (!items || items.length === 0) {
+    if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
       return res.status(400).json({ success: false, message: 'Cart items are required to place an order.' });
     }
 
-    if (!shippingAddress || !shippingAddress.fullName || !shippingAddress.street || !shippingAddress.city) {
-      return res.status(400).json({ success: false, message: 'Complete shipping address is required.' });
+    const addressErrors = validateAddress(shippingAddress);
+    if (addressErrors.length > 0) {
+      return res.status(400).json({ success: false, message: addressErrors[0] });
+    }
+    if (items.some(item => !item || !item.productId && !item.id && !item._id || !isValidName(item.name, 1, 200) || !isPositiveNumber(item.price) || !isPositiveInteger(item.quantity))) {
+      return res.status(400).json({ success: false, message: 'Order contains invalid product or quantity information.' });
     }
 
     // Calculate total amount & fair artisan contribution (approx 85% goes directly to artisan)
@@ -50,7 +55,7 @@ const createOrder = async (req, res) => {
         productId: item.productId || item.id || item._id,
         name: item.name,
         price: Number(item.price),
-        quantity: Number(item.quantity || 1),
+        quantity: Number(item.quantity),
         imageUrl: item.imageUrl || '',
         category: item.category || 'Handicrafts',
         artisanId: item.artisanId || item.userId || '65e000000000000000000001',
@@ -58,7 +63,15 @@ const createOrder = async (req, res) => {
       })),
       totalAmount,
       directArtisanShare,
-      shippingAddress,
+      shippingAddress: {
+        ...shippingAddress,
+        fullName: shippingAddress.fullName.trim(),
+        phone: `+91 ${normalizePhone(shippingAddress.phone)}`,
+        street: shippingAddress.street.trim(),
+        city: shippingAddress.city.trim(),
+        state: shippingAddress.state.trim(),
+        postalCode: shippingAddress.postalCode.trim()
+      },
       paymentMethod,
       paymentStatus: paymentMethod === 'cod' ? 'pending' : 'completed',
       orderStatus: 'placed',

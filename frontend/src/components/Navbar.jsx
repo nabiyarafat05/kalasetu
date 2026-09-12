@@ -262,7 +262,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                   className="flex items-center gap-2 p-1 sm:px-2 sm:py-1 rounded-full hover:bg-gray-100 transition border border-transparent hover:border-gray-200"
                 >
                   <img
-                    src={user.avatar || (isBuyer ? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" : "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80")}
+                    src={user.name === 'Radha Devi' ? '/radha-devi.jpeg' : (user.avatar || (isBuyer ? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" : "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"))}
                     alt={user.name}
                     className="w-9 h-9 rounded-full object-cover border-2 border-sandalwood-300 ring-1 ring-terracotta-200"
                   />

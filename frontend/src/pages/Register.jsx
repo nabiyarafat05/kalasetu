@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { ArrowRight, User, Mail, Lock, Store } from 'lucide-react';
+import { isValidEmail, isValidName, isValidPhone } from '../utils/validation';
 
 export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
   const { lang, t } = useLanguage();
@@ -17,11 +18,13 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
     craftSpecialty: 'Traditional Indian Handicrafts',
     location: 'Rajasthan, India',
     region: 'Rajasthan',
-    phone: '+91 '
+    phone: ''
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handleRoleSelect = (role) => {
@@ -34,7 +37,16 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await register(formData);
+    const nextErrors = {};
+    if (!isValidName(formData.name)) nextErrors.name = 'Please enter a valid name.';
+    if (!isValidEmail(formData.email)) nextErrors.email = 'Please enter a valid email address.';
+    if (formData.phone.trim() && !isValidPhone(formData.phone)) nextErrors.phone = 'Please enter a valid 10-digit mobile number.';
+    if (formData.password.length < 8) nextErrors.password = 'Password must be at least 8 characters.';
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+    const res = await register({ ...formData, name: formData.name.trim(), email: formData.email.trim() });
     if (res.success) {
       addToast(
         lang === 'hi'
@@ -116,6 +128,7 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
             />
           </div>
+          {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
         </div>
 
         <div>
@@ -134,6 +147,7 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
             />
           </div>
+          {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
         </div>
 
         <div>
@@ -152,6 +166,7 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
             />
           </div>
+          {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
         </div>
 
         {formData.role === 'artisan' && (
@@ -199,6 +214,7 @@ export const Register = ({ onNavigateToLogin, onRegisterSuccess }) => {
             />
           </div>
         </div>
+        {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
 
         <button
           type="submit"

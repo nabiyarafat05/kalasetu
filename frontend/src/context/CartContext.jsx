@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useToast } from './ToastContext';
 import { useLanguage } from './LanguageContext';
+import { isPositiveInteger, isPositiveNumber } from '../utils/validation';
 
 const CartContext = createContext();
 
@@ -32,6 +33,10 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = async (product, quantity = 1) => {
+    if (!isPositiveInteger(quantity) || !isPositiveNumber(product.price)) {
+      addToast('Invalid product quantity or price.', 'error');
+      return;
+    }
     const productId = product.id || product._id;
     const item = {
       productId: productId.toString(),
@@ -64,6 +69,10 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateQuantity = async (productId, newQuantity) => {
+    if (!isPositiveInteger(newQuantity) && newQuantity > 0) {
+      addToast('Quantity must be a positive whole number.', 'error');
+      return;
+    }
     if (newQuantity <= 0) {
       return removeFromCart(productId);
     }

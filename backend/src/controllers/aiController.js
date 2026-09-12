@@ -2,6 +2,7 @@ const { generateAICatalog, calculatePriceSuggestion, enhanceProductImage } = req
 const Catalog = require('../models/Catalog');
 const PriceSuggestion = require('../models/PriceSuggestion');
 const { isConnectedToMongo, memoryStore } = require('../config/db');
+const { isValidName, isPositiveNumber } = require('../utils/validation');
 
 /**
  * @route POST /api/ai/catalog
@@ -19,6 +20,10 @@ const generateCatalog = async (req, res) => {
       artisanName,
       productId
     } = req.body;
+
+    if (!isValidName(name, 3, 150) || String(description || '').trim().length < 10 || String(description || '').trim().length > 5000) {
+      return res.status(400).json({ success: false, message: 'Please provide a valid product name and description.' });
+    }
 
     const catalogResult = await generateAICatalog({
       name: name || '',
@@ -73,6 +78,10 @@ const getPriceSuggestion = async (req, res) => {
       craftComplexity = 'intricate',
       productId
     } = req.body;
+
+    if (!isPositiveNumber(rawMaterialCost) || !isPositiveNumber(productionCost) || !isPositiveNumber(laborHours) || Number(laborHours) > 300) {
+      return res.status(400).json({ success: false, message: 'Please provide valid positive cost and labor values.' });
+    }
 
     const priceResult = calculatePriceSuggestion({
       category,

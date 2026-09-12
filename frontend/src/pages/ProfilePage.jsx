@@ -14,6 +14,7 @@ import {
   Home,
   Check
 } from 'lucide-react';
+import { isValidEmail, isValidName, isValidPhone } from '../utils/validation';
 
 export const ProfilePage = ({ onBack }) => {
   const { lang, t } = useLanguage();
@@ -41,9 +42,11 @@ export const ProfilePage = ({ onBack }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handleAddressChange = (e) => {
@@ -54,13 +57,32 @@ export const ProfilePage = ({ onBack }) => {
         [e.target.name]: e.target.value
       }
     });
+    setErrors((prev) => ({ ...prev, [`shippingAddress.${e.target.name}`]: '' }));
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const nextErrors = {};
+    if (!isValidName(formData.name)) nextErrors.name = 'Please enter a valid name.';
+    if (!isValidEmail(formData.email)) nextErrors.email = 'Please enter a valid email address.';
+    if (formData.phone && !isValidPhone(formData.phone)) nextErrors.phone = 'Please enter a valid 10-digit mobile number.';
+    const address = formData.shippingAddress;
+    const hasAddress = Object.values(address).some((value) => value && value !== 'India');
+    if (hasAddress) {
+      if (!address.fullName || !isValidName(address.fullName)) nextErrors['shippingAddress.fullName'] = 'Please enter a valid recipient name.';
+      if (!address.phone || !isValidPhone(address.phone)) nextErrors['shippingAddress.phone'] = 'Please enter a valid 10-digit mobile number.';
+      if (!address.street.trim()) nextErrors['shippingAddress.street'] = 'This field is required.';
+      if (!address.city.trim()) nextErrors['shippingAddress.city'] = 'This field is required.';
+      if (!/^\d{6}$/.test(address.postalCode.trim())) nextErrors['shippingAddress.postalCode'] = 'Please enter a valid 6-digit PIN code.';
+    }
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
     setLoading(true);
     try {
-      await updateProfile(formData);
+      const result = await updateProfile({ ...formData, name: formData.name.trim(), email: formData.email.trim() });
+      if (result?.success === false) throw new Error(result.message);
       addToast(
         lang === 'hi' ? 'प्रोफाइल सफलतापूर्वक अपडेट हो गई!' : 'Profile updated successfully!',
         'success'
@@ -135,6 +157,7 @@ export const ProfilePage = ({ onBack }) => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
               />
+              {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
             </div>
 
             <div>
@@ -148,6 +171,7 @@ export const ProfilePage = ({ onBack }) => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
               />
+              {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
             </div>
 
             <div>
@@ -225,6 +249,7 @@ export const ProfilePage = ({ onBack }) => {
                   onChange={handleAddressChange}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                 />
+                {errors['shippingAddress.street'] && <p className="text-xs text-red-600 mt-1">{errors['shippingAddress.street']}</p>}
               </div>
               <div>
                 <input
@@ -235,6 +260,7 @@ export const ProfilePage = ({ onBack }) => {
                   onChange={handleAddressChange}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                 />
+                {errors['shippingAddress.city'] && <p className="text-xs text-red-600 mt-1">{errors['shippingAddress.city']}</p>}
               </div>
               <div>
                 <input
@@ -245,6 +271,7 @@ export const ProfilePage = ({ onBack }) => {
                   onChange={handleAddressChange}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                 />
+                {errors['shippingAddress.postalCode'] && <p className="text-xs text-red-600 mt-1">{errors['shippingAddress.postalCode']}</p>}
               </div>
             </div>
           </div>

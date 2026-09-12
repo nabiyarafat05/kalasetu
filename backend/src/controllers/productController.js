@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const { isConnectedToMongo, memoryStore } = require('../config/db');
+const { validateProduct, isValidName, isPositiveNumber } = require('../utils/validation');
 
 /**
  * @route GET /api/products
@@ -201,8 +202,9 @@ const createProduct = async (req, res) => {
       priceSuggestion
     } = req.body;
 
-    if (!name || !price) {
-      return res.status(400).json({ success: false, message: 'Product name and price are required.' });
+    const productErrors = validateProduct({ name, description, price });
+    if (productErrors.length > 0) {
+      return res.status(400).json({ success: false, message: productErrors[0] });
     }
 
     const defaultImage = 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80';
@@ -210,8 +212,8 @@ const createProduct = async (req, res) => {
       userId: req.user?.id || req.user?._id || '65e000000000000000000001',
       artisanId: req.user?.id || req.user?._id || '65e000000000000000000001',
       artisanName: artisanName || req.user?.name || 'Radha Devi',
-      name,
-      description: description || 'Beautifully handcrafted artisan item.',
+      name: name.trim(),
+      description: description.trim(),
       hindiDescription: hindiDescription || '',
       category: category || 'Pottery & Ceramics',
       material: material || 'Natural Materials',
@@ -262,7 +264,24 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = { ...req.body };
+    if (updates.name !== undefined || updates.description !== undefined || updates.price !== undefined) {
+      const productErrors = validateProduct({
+        name: updates.name,
+        description: updates.description,
+        price: updates.price
+      });
+      if (productErrors.length > 0) {
+        return res.status(400).json({ success: false, message: productErrors[0] });
+      }
+      updates.name = updates.name.trim();
+      updates.description = updates.description.trim();
+      updates.price = Number(updates.price);
+    }
+    const allowedFields = ['name', 'description', 'hindiDescription', 'category', 'material', 'dimensions', 'weight', 'craftType', 'location', 'price', 'imageUrl', 'enhancedImageUrl', 'status', 'aiCatalogData', 'priceSuggestion'];
+    for (const key of Object.keys(updates)) {
+      if (!allowedFields.includes(key)) delete updates[key];
+    }
 
     if (isConnectedToMongo()) {
       let product = null;
@@ -270,7 +289,7 @@ const updateProduct = async (req, res) => {
         product = await Product.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
       }
       if (!product) {
-        product = await Product.findOneAndUpdate({ id }, updates, { new: true });
+        product = await Product.findOneAndUpdate({ id }, updates, { new: true, runValidators: true });
       }
 
       if (!product) {

@@ -18,6 +18,7 @@ import {
   Share2,
   HelpCircle
 } from 'lucide-react';
+import { validateProduct } from '../utils/validation';
 
 export const AICatalogGenerator = ({ onApplyToProduct }) => {
   const { lang, t, speakText } = useLanguage();
@@ -38,6 +39,7 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
   const [result, setResult] = useState(null);
   const [activeTab, setActiveTab] = useState('en'); // 'en', 'hi', 'seo', 'story', 'whatsapp'
   const [copiedKey, setCopiedKey] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const categories = [
     'Pottery & Ceramics',
@@ -59,10 +61,18 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
 
   const handleGenerate = async (e) => {
     if (e) e.preventDefault();
+    if (loading) return;
+    const nextErrors = validateProduct({ name: formData.name, description: formData.description, price: 1 });
+    delete nextErrors.price;
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      addToast('Please correct the craft information before generating.', 'error');
+      return;
+    }
 
     setLoading(true);
     try {
-      const res = await api.ai.generateCatalog(formData);
+      const res = await api.ai.generateCatalog({ ...formData, name: formData.name.trim(), description: formData.description.trim() });
       if (res.data?.success) {
         setResult(res.data.data);
         try {
@@ -155,6 +165,7 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
                 placeholder="e.g. Handmade Ceramic Bowl"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
               />
+              {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
             </div>
 
             <div>
@@ -184,6 +195,7 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
               placeholder="e.g. Pure Clay, Botanical Glaze, Brass Wire"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
             />
+              {errors.description && <p className="text-xs text-red-600 mt-1">{errors.description}</p>}
           </div>
 
           <div>

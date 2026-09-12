@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { ArrowRight, UserCheck, Lock, Mail, Store, User } from 'lucide-react';
+import { isValidEmail } from '../utils/validation';
 
 export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
   const { lang, t } = useLanguage();
@@ -11,10 +12,18 @@ export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
 
   const [email, setEmail] = useState('radha.devi@kalasetu.org');
   const [password, setPassword] = useState('demo_password_123');
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await login(email, password);
+    const nextErrors = {};
+    if (!isValidEmail(email)) nextErrors.email = 'Please enter a valid email address.';
+    if (!password.trim()) nextErrors.password = 'Password is required.';
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+    const res = await login(email.trim(), password);
     if (res.success) {
       addToast(
         lang === 'hi' ? 'नमस्ते! कला सेतु में आपका स्वागत है।' : 'Welcome back to KalaSetu!',
@@ -103,6 +112,7 @@ export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
               placeholder="user@kalasetu.org"
             />
           </div>
+          {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
         </div>
 
         <div>
@@ -120,6 +130,7 @@ export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
               placeholder="••••••••"
             />
           </div>
+          {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
         </div>
 
         <button
