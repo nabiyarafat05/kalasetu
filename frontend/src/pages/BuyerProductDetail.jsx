@@ -17,10 +17,11 @@ import {
   Sliders,
   MessageSquare,
   Award,
-  Check
+  Check,
+  BadgeCheck
 } from 'lucide-react';
 
-export const BuyerProductDetail = ({ product, onBack, onSelectArtisan }) => {
+export const BuyerProductDetail = ({ product, onBack, onSelectArtisan, onOpenCraftPassport }) => {
   const { lang, t } = useLanguage();
   const { addToCart } = useCart();
   const { isFavourite, toggleFavourite } = useFavourite();
@@ -95,7 +96,7 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan }) => {
               <div className="mt-3 flex items-center justify-between px-2">
                 <span className="text-xs text-gray-500 font-medium flex items-center gap-1">
                   <Sparkles className="w-3.5 h-3.5 text-sandalwood-500" />
-                  AI Studio Verified
+                  AI-assisted enhancement preview
                 </span>
                 <button
                   type="button"
@@ -146,9 +147,9 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan }) => {
                 {product.category}
               </span>
 
-              <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300 flex items-center gap-1">
+              <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-300 flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                Fair Trade Certified
+                Fair-trade pricing guidance
               </span>
             </div>
 
@@ -199,6 +200,15 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan }) => {
             >
               <MessageSquare className="w-4 h-4 text-emerald-600" />
               <span>{lang === 'hi' ? 'कारीगर से व्हाट्सएप पर बात करें' : 'Chat with Artisan on WhatsApp'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onOpenCraftPassport?.(product)}
+              className="w-full py-2.5 px-4 rounded-2xl bg-white hover:bg-terracotta-50 text-terracotta-800 border border-terracotta-200 font-bold text-xs flex items-center justify-center gap-2 transition"
+            >
+              <BadgeCheck className="w-4 h-4" />
+              <span>View Craft Passport</span>
             </button>
           </div>
 

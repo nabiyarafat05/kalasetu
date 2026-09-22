@@ -3,10 +3,24 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     background-color: #FAF6F0;
     color: #1E2A38;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
   }
 }
 

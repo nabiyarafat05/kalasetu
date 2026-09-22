@@ -19,10 +19,11 @@ import {
   Package,
   Layers,
   Award,
-  Sliders
+  Sliders,
+  BadgeCheck
 } from 'lucide-react';
 
-export const ProductDetail = ({ product, onBack, onEdit, onProductDeleted, onProductUpdated }) => {
+export const ProductDetail = ({ product, onBack, onEdit, onOpenCraftPassport, onProductDeleted, onProductUpdated }) => {
   const { lang, t } = useLanguage();
   const { addToast } = useToast();
 
@@ -85,6 +86,14 @@ export const ProductDetail = ({ product, onBack, onEdit, onProductDeleted, onPro
           >
             <Share2 className="w-4 h-4" />
             <span className="hidden sm:inline">{t('shareOnWhatsApp')}</span>
+          </button>
+
+          <button
+            onClick={() => onOpenCraftPassport?.(currentProduct)}
+            className="p-2.5 rounded-xl bg-terracotta-50 hover:bg-terracotta-100 text-terracotta-800 border border-terracotta-200 text-xs font-bold flex items-center gap-1.5 transition"
+          >
+            <BadgeCheck className="w-4 h-4" />
+            <span className="hidden sm:inline">Craft Passport</span>
           </button>
 
           <button
@@ -261,6 +270,26 @@ export const ProductDetail = ({ product, onBack, onEdit, onProductDeleted, onPro
                 </ul>
               </div>
             )}
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 border border-terracotta-100 shadow-sm space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="font-bold text-sm text-indigoClay-900 flex items-center gap-2">
+                <Passport className="w-4 h-4 text-terracotta-600" />
+                <span>Craft Passport</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => onOpenCraftPassport?.(currentProduct)}
+                className="inline-flex items-center gap-2 rounded-full bg-terracotta-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-terracotta-700"
+              >
+                <BadgeCheck className="h-3.5 w-3.5" />
+                View passport
+              </button>
+            </div>
+            <p className="text-sm leading-7 text-gray-700">
+              Every product can carry a digital identity with the artisan story, craft DNA, material history, and care guidance without making unsupported claims.
+            </p>
           </div>
 
           {/* Product Specifications Grid */}

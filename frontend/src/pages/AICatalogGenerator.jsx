@@ -70,8 +70,8 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
         } catch (err) {}
         addToast(
           lang === 'hi'
-            ? '✨ एआई कैटलॉग सफलतापूर्वक तैयार हो गया!'
-            : '✨ AI Multilingual Catalog generated successfully!',
+            ? '✨ एआई ड्राफ्ट तैयार है — कृपया अंतिम विवरण की समीक्षा और सत्यापन करें।'
+            : '✨ AI-assisted draft is ready — please review and verify the final details before publishing.',
           'success'
         );
       } else {
@@ -114,15 +114,15 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold mb-2">
             <Wand2 className="w-3.5 h-3.5 text-sandalwood-300" />
-            <span>AI Multilingual Engine</span>
+            <span>AI-Assisted Draft Generator</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif font-extrabold leading-tight">
             {t('createCatalog')}
           </h1>
           <p className="mt-1.5 text-xs sm:text-sm text-terracotta-100 font-medium">
             {lang === 'hi'
-              ? 'अपनी भाषा में बोलें या संक्षेप में लिखें। एआई कुछ ही सेकंड में आकर्षक शीर्षक, अंग्रेजी और हिन्दी विवरण, और सोशल मीडिया संदेश तैयार कर देगा।'
-              : 'Speak in your regional language or enter raw craft notes. Our AI instantly writes professional product titles, SEO descriptions, and Hindi translations.'}
+              ? 'अपनी भाषा में बोलें या संक्षेप में लिखें। एआई एक प्रारंभिक ड्राफ्ट तैयार करता है, जिसे आप अंतिम रूप देने से पहले समीक्षा और सत्यापन करते हैं।'
+              : 'Speak in your regional language or enter raw craft notes. The AI creates an initial draft that should be reviewed and verified before publication.'}
           </p>
         </div>
       </div>
@@ -225,8 +225,8 @@ export const AICatalogGenerator = ({ onApplyToProduct }) => {
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
             <div>
-              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-emerald-200">
-                ✨ AI Generated Output
+              <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-amber-200">
+                ✨ AI-Assisted Draft
               </span>
               <h2 className="text-xl font-serif font-extrabold text-indigoClay-900 mt-1">
                 {result.generatedTitle}

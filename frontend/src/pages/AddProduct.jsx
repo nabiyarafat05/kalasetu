@@ -51,6 +51,23 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
   const [imagePreview, setImagePreview] = useState(
     initialData?.enhancedImageUrl || initialData?.imageUrl || capturedImage || 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80'
   );
+  const [craftPassport, setCraftPassport] = useState({
+    passportId: initialData?.craftPassport?.passportId || `KS-CRAFT-${String(initialData?.id || initialData?._id || Date.now()).slice(-6).toUpperCase()}`,
+    artisanStory: initialData?.craftPassport?.artisanStory || initialData?.aiCatalogData?.artisanStory || `${user?.name || 'Artisan'} makes each piece with care, tradition, and practical craft knowledge.`,
+    craftStory: initialData?.craftPassport?.craftStory || initialData?.description || 'Craft story not provided yet.',
+    origin: initialData?.craftPassport?.origin || initialData?.location || 'Information not available',
+    craftCategory: initialData?.craftPassport?.craftCategory || initialData?.category || 'Information not available',
+    materials: initialData?.craftPassport?.materials || [initialData?.material || 'Information not available'],
+    techniques: initialData?.craftPassport?.techniques || [initialData?.craftType || 'Handmade craft'],
+    process: initialData?.craftPassport?.process || ['Material selection', 'Handcrafting', 'Finishing', 'Quality review'],
+    careInstructions: initialData?.craftPassport?.careInstructions || ['Handle with care', 'Clean gently', 'Information not available'],
+    culturalContext: initialData?.craftPassport?.culturalContext || 'Information not available',
+    productSummary: initialData?.craftPassport?.productSummary || initialData?.description || 'Product story not provided yet.',
+    status: initialData?.craftPassport?.status || 'draft',
+    published: Boolean(initialData?.craftPassport?.published),
+    generatedByAi: Boolean(initialData?.craftPassport?.generatedByAi || initialData?.aiCatalogData),
+    approvedByArtisan: Boolean(initialData?.craftPassport?.approvedByArtisan)
+  });
 
   const categories = [
     'Pottery & Ceramics',
@@ -116,8 +133,15 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
           hindiDescription: catalog.hindiDescription,
           aiCatalogData: catalog
         }));
+        setCraftPassport((prev) => ({
+          ...prev,
+          artisanStory: catalog.artisanStory || prev.artisanStory,
+          productSummary: catalog.generatedDescription || prev.productSummary,
+          craftStory: catalog.generatedDescription || prev.craftStory,
+          generatedByAi: true
+        }));
         addToast(
-          lang === 'hi' ? '✨ एआई ने अंग्रेजी और हिन्दी में विवरण तैयार कर दिया!' : '✨ AI Catalog generated in English & Hindi!',
+          lang === 'hi' ? '✨ एआई ड्राफ्ट तैयार है — कृपया अंतिम विवरण की समीक्षा और सत्यापन करें।' : '✨ AI-assisted draft created — please review and verify the final details before publishing.',
           'success'
         );
       }
@@ -174,11 +198,22 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
 
     setLoading(true);
     try {
+      const payload = {
+        ...formData,
+        craftPassport: {
+          ...craftPassport,
+          passportId: craftPassport.passportId || `KS-CRAFT-${String(Date.now()).slice(-6).toUpperCase()}`,
+          status: craftPassport.published ? 'published' : 'draft',
+          published: Boolean(craftPassport.published),
+          approvedByArtisan: Boolean(craftPassport.approvedByArtisan)
+        }
+      };
+
       let res;
       if (isEditing) {
-        res = await api.products.update(initialData.id || initialData._id, formData);
+        res = await api.products.update(initialData.id || initialData._id, payload);
       } else {
-        res = await api.products.create(formData);
+        res = await api.products.create(payload);
       }
 
       if (res.data?.success) {
@@ -404,6 +439,73 @@ export const AddProduct = ({ initialData, capturedImage, onCancel, onSaved }) =>
               placeholder="Describe your handicraft, design motifs, technique..."
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 focus:border-transparent text-xs sm:text-sm text-indigoClay-900"
             />
+          </div>
+
+          <div className="rounded-2xl border border-terracotta-200 bg-terracotta-50/40 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-terracotta-700">Craft Passport</p>
+                <p className="mt-1 text-xs text-gray-600">Artisan-led product identity, craft story, and buyer-facing context.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCraftPassport((prev) => ({ ...prev, published: !prev.published, status: prev.published ? 'draft' : 'published' }))}
+                className={`rounded-full px-3 py-1.5 text-[11px] font-bold ${craftPassport.published ? 'bg-emerald-600 text-white' : 'bg-white text-terracotta-700 border border-terracotta-200'}`}
+              >
+                {craftPassport.published ? 'Published' : 'Draft'}
+              </button>
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-indigoClay-900">Artisan story</label>
+                <textarea
+                  rows={4}
+                  value={craftPassport.artisanStory}
+                  onChange={(e) => setCraftPassport((prev) => ({ ...prev, artisanStory: e.target.value }))}
+                  className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-indigoClay-900">Craft story</label>
+                <textarea
+                  rows={4}
+                  value={craftPassport.craftStory}
+                  onChange={(e) => setCraftPassport((prev) => ({ ...prev, craftStory: e.target.value }))}
+                  className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-indigoClay-900">Origin</label>
+                <input
+                  value={craftPassport.origin}
+                  onChange={(e) => setCraftPassport((prev) => ({ ...prev, origin: e.target.value }))}
+                  className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-indigoClay-900">Materials</label>
+                <input
+                  value={craftPassport.materials.join(', ')}
+                  onChange={(e) => setCraftPassport((prev) => ({ ...prev, materials: e.target.value.split(',').map((item) => item.trim()).filter(Boolean) }))}
+                  className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-indigoClay-900">Care instructions</label>
+              <textarea
+                rows={3}
+                value={craftPassport.careInstructions.join('\n')}
+                onChange={(e) => setCraftPassport((prev) => ({ ...prev, careInstructions: e.target.value.split('\n').map((item) => item.trim()).filter(Boolean) }))}
+                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500"
+              />
+            </div>
           </div>
 
           <div>

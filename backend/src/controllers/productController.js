@@ -198,7 +198,8 @@ const createProduct = async (req, res) => {
       status = 'active',
       artisanName,
       aiCatalogData,
-      priceSuggestion
+      priceSuggestion,
+      craftPassport
     } = req.body;
 
     if (!name || !price) {
@@ -206,6 +207,7 @@ const createProduct = async (req, res) => {
     }
 
     const defaultImage = 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80';
+    const passportId = craftPassport?.passportId || `KS-CRAFT-${String(Date.now()).slice(-6)}`;
     const productPayload = {
       userId: req.user?.id || req.user?._id || '65e000000000000000000001',
       artisanId: req.user?.id || req.user?._id || '65e000000000000000000001',
@@ -225,6 +227,25 @@ const createProduct = async (req, res) => {
       status: status || 'active',
       aiCatalogData: aiCatalogData || null,
       priceSuggestion: priceSuggestion || null,
+      craftPassport: {
+        passportId,
+        artisanStory: craftPassport?.artisanStory || aiCatalogData?.artisanStory || 'Artisan story not provided yet.',
+        craftStory: craftPassport?.craftStory || description || 'Craft story not provided yet.',
+        origin: craftPassport?.origin || location || 'Information not available',
+        craftCategory: craftPassport?.craftCategory || category || 'Information not available',
+        materials: Array.isArray(craftPassport?.materials) ? craftPassport.materials : [material || 'Information not available'],
+        techniques: Array.isArray(craftPassport?.techniques) ? craftPassport.techniques : [craftType || 'Handmade craft'],
+        process: Array.isArray(craftPassport?.process) ? craftPassport.process : ['Material selection', 'Handcrafting', 'Finishing', 'Quality review'],
+        careInstructions: Array.isArray(craftPassport?.careInstructions) ? craftPassport.careInstructions : ['Handle with care', 'Clean gently', 'Information not available'],
+        culturalContext: craftPassport?.culturalContext || 'Information not available',
+        productSummary: craftPassport?.productSummary || aiCatalogData?.generatedDescription || description || 'Product story not provided yet.',
+        status: craftPassport?.status || 'draft',
+        published: Boolean(craftPassport?.published),
+        generatedByAi: Boolean(craftPassport?.generatedByAi || aiCatalogData?.artisanStory),
+        approvedByArtisan: Boolean(craftPassport?.approvedByArtisan),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      },
       createdAt: new Date().toISOString()
     };
 
@@ -263,6 +284,10 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
+
+    if (updates?.craftPassport && !updates.craftPassport.passportId) {
+      updates.craftPassport.passportId = `KS-CRAFT-${String(Date.now()).slice(-6)}`;
+    }
 
     if (isConnectedToMongo()) {
       let product = null;

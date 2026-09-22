@@ -84,6 +84,38 @@ const ProductSchema = new mongoose.Schema(
       rawMaterialCost: Number,
       productionCost: Number,
       explanation: String
+    },
+    craftPassport: {
+      passportId: String,
+      artisanStory: String,
+      craftStory: String,
+      origin: String,
+      craftCategory: String,
+      materials: [String],
+      techniques: [String],
+      process: [String],
+      careInstructions: [String],
+      culturalContext: String,
+      productSummary: String,
+      status: {
+        type: String,
+        enum: ['draft', 'published'],
+        default: 'draft'
+      },
+      published: {
+        type: Boolean,
+        default: false
+      },
+      generatedByAi: {
+        type: Boolean,
+        default: false
+      },
+      approvedByArtisan: {
+        type: Boolean,
+        default: false
+      },
+      createdAt: Date,
+      updatedAt: Date
     }
   },
   { timestamps: true }

@@ -21,6 +21,9 @@ import { ProfilePage } from './pages/ProfilePage';
 import { AICatalogGenerator } from './pages/AICatalogGenerator';
 import { ImageEnhancer } from './pages/ImageEnhancer';
 import { PriceSuggestion } from './pages/PriceSuggestion';
+import { AboutUsPage } from './pages/AboutUsPage';
+import { ContactUsPage } from './pages/ContactUsPage';
+import { CraftPassportPage } from './pages/CraftPassportPage';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 
@@ -109,18 +112,28 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-khadi font-sans selection:bg-terracotta-200">
+    <div className="min-h-screen flex flex-col justify-between bg-khadi font-sans selection:bg-terracotta-200 overflow-x-hidden">
       
       {/* Top Navigation Bar */}
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
       {/* Main Content View */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 md:pb-12 flex-1 w-full">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-x-hidden px-4 pb-24 pt-6 sm:px-6 md:pb-12 lg:px-8">
         
         {/* Marketplace Home (Buyer Discovery) */}
         {currentTab === 'marketplace' && (
           <MarketplaceHome
             onSelectProduct={handleSelectBuyerProduct}
+            onSelectArtisan={handleSelectArtisan}
+          />
+        )}
+
+        {currentTab === 'about' && <AboutUsPage />}
+        {currentTab === 'contact' && <ContactUsPage />}
+        {currentTab === 'craft-passport' && selectedProduct && (
+          <CraftPassportPage
+            product={selectedProduct}
+            onBack={() => setCurrentTab('product-detail')}
             onSelectArtisan={handleSelectArtisan}
           />
         )}
@@ -131,6 +144,10 @@ function MainApp() {
             product={selectedProduct}
             onBack={() => setCurrentTab('marketplace')}
             onSelectArtisan={handleSelectArtisan}
+            onOpenCraftPassport={(product) => {
+              setSelectedProduct(product);
+              setCurrentTab('craft-passport');
+            }}
           />
         )}
 
@@ -173,6 +190,10 @@ function MainApp() {
             product={selectedProduct}
             onBack={() => setCurrentTab('dashboard')}
             onEdit={handleEditProduct}
+            onOpenCraftPassport={(product) => {
+              setSelectedProduct(product);
+              setCurrentTab('craft-passport');
+            }}
             onProductDeleted={handleProductDeleted}
             onProductUpdated={(updated) => setSelectedProduct(updated)}
           />
@@ -352,7 +373,7 @@ function MainApp() {
       </div>
 
       {/* Footer */}
-      <Footer />
+      <Footer currentTab={currentTab} setCurrentTab={setCurrentTab} isArtisan={isArtisan} />
     </div>
   );
 }

@@ -1,123 +1,115 @@
-<<<<<<< HEAD
-  import "./Footer.css";
+import React from 'react';
+import { ArrowUpRight, Mail, MapPin, MessageSquareText, Phone } from 'lucide-react';
 
- export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
+  const handleNavigate = (tab) => {
+    if (!setCurrentTab) return;
+    setCurrentTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const homeTab = isArtisan ? 'dashboard' : 'marketplace';
+
   return (
-    <>
-      <button className="back-to-top" onClick={scrollToTop}>
-        Back to top ↑
-      </button>
+    <footer className="mt-16 border-t border-terracotta-100 bg-gradient-to-br from-terracotta-700 via-terracotta-600 to-sandalwood-500 px-4 pb-6 pt-10 text-white shadow-[0_-4px_20px_rgba(200,90,50,0.15)]">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-xl shadow-sm shadow-terracotta-500/20">
+                🪔
+              </div>
+              <div>
+                <p className="font-serif text-2xl font-extrabold tracking-tight text-white">KALASETU</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-terracotta-100">Crafting digital opportunity</p>
+              </div>
+            </div>
 
-      <footer className="site-footer">
-        <div className="footer-columns">
-          <div className="footer-col">
-            <h4>Get to Know Us</h4>
-            <ul>
-              <li><a href="#">About Artisan Hub</a></li>
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Meet the Artisans</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Press</a></li>
+            <p className="mt-4 max-w-md text-sm leading-7 text-terracotta-50">
+              Bridging traditional craftsmanship with digital opportunity, helping artisans present their work with clarity, confidence, and fairer market access.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => handleNavigate('about')}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+              >
+                About Us <ArrowUpRight className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavigate('contact')}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+              >
+                Contact Us <ArrowUpRight className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Quick Links</h3>
+            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+              <li><button type="button" onClick={() => handleNavigate(homeTab)} className="transition hover:text-white">Home</button></li>
+              <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">Marketplace</button></li>
+              <li><button type="button" onClick={() => handleNavigate('about')} className="transition hover:text-white">About Us</button></li>
+              <li><button type="button" onClick={() => handleNavigate('contact')} className="transition hover:text-white">Contact Us</button></li>
             </ul>
           </div>
 
-          <div className="footer-col">
-            <h4>For Artisans</h4>
-            <ul>
-              <li><a href="#">Artisan Dashboard</a></li>
-              <li><a href="#">Add New Product</a></li>
-              <li><a href="#">Fair Living Wage Policy</a></li>
-              <li><a href="#">Seller Support</a></li>
-              <li><a href="#">Craft Guidelines</a></li>
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">For Artisans</h3>
+            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+              <li><button type="button" onClick={() => handleNavigate('add-product')} className="transition hover:text-white">Add Product</button></li>
+              <li><button type="button" onClick={() => handleNavigate('dashboard')} className="transition hover:text-white">My Products</button></li>
+              <li><button type="button" onClick={() => handleNavigate('catalog')} className="transition hover:text-white">AI Catalog Generator</button></li>
+              <li><button type="button" onClick={() => handleNavigate('pricing')} className="transition hover:text-white">Price Suggestion</button></li>
             </ul>
           </div>
 
-          <div className="footer-col">
-            <h4>AI-Powered Tools</h4>
-            <ul>
-              <li><a href="#">AI Catalog Generator</a></li>
-              <li><a href="#">AI Image Enhancer</a></li>
-              <li><a href="#">AI Price Suggestion</a></li>
-              <li><a href="#">Instant Product Capture</a></li>
-              <li><a href="#">Voice Catalog (EN / हिन्दी)</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>Connect With Us</h4>
-            <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Buyer Support</a></li>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Contact Us</a></li>
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">For Buyers</h3>
+            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+              <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">Explore Products</button></li>
+              <li><button type="button" onClick={() => handleNavigate('favourites')} className="transition hover:text-white">Favourites</button></li>
+              <li><button type="button" onClick={() => handleNavigate('orders')} className="transition hover:text-white">Orders</button></li>
             </ul>
           </div>
         </div>
 
-        <div className="footer-brand-row">
-          <div className="footer-brand">
-            🏺 Artisan Hub{" "}
-            <span className="badge">AI-Powered Digital Artisan Hub</span>
+        <div className="mt-10 grid gap-5 border-t border-white/15 pt-6 md:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Contact</h3>
+            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-4 w-4 text-terracotta-100" />
+                <a href="mailto:radha.devi@kalasetu.org" className="transition hover:text-white">radha.devi@kalasetu.org</a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-4 w-4 text-terracotta-100" />
+                <a href="tel:+919829012345" className="transition hover:text-white">+91 98290 12345</a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 text-terracotta-100" />
+                <span>Sanganer, Jaipur, Rajasthan</span>
+              </li>
+            </ul>
           </div>
 
-          <div className="footer-locale">
-            <div className="locale-pill">🌐 English</div>
-            <div className="locale-pill">📍 Sanganer, Jaipur, Rajasthan</div>
-            <div className="locale-pill">₹ INR</div>
+          <div className="md:text-right">
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Support</h3>
+            <div className="mt-4 flex items-center justify-start gap-2 text-sm text-terracotta-50/90 md:justify-end">
+              <MessageSquareText className="h-4 w-4 text-terracotta-100" />
+              <button type="button" onClick={() => handleNavigate('contact')} className="transition hover:text-white">Send feedback</button>
+            </div>
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <span>© 2026 Artisan Hub. Digitizing handcrafted heritage worldwide.</span>
-          <span className="dot">•</span>
-          <a href="#">Privacy Policy</a>
-          <span className="dot">•</span>
-          <a href="#">Terms of Use</a>
-          <span className="dot">•</span>
-          <a href="#">Cookies</a>
+        <div className="mt-8 border-t border-white/15 pt-4 text-center text-xs text-terracotta-100">
+          © 2026 KalaSetu. All rights reserved.
         </div>
-      </footer>
-    </>
-=======
-import React from 'react';
-
-export const Footer = () => {
-  return (
-    <footer className="mt-16 border-t border-terracotta-100 bg-white px-4 pt-10 pb-5">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-        <div className="sm:max-w-xs">
-          <p className="font-serif text-xl font-extrabold text-terracotta-700">Kalasetu</p>
-          <p className="mt-2 text-sm leading-6 text-gray-500">
-            Digital commerce without digital complexity
-          </p>
-        </div>
-
-        <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-sm text-indigoClay-700">
-          <p className="mb-1 font-semibold text-indigoClay-900">Quick links</p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <a href="#home" className="transition hover:text-terracotta-600">Home</a>
-            <a href="#browse-products" className="transition hover:text-terracotta-600">Browse Products</a>
-            <a href="#about" className="transition hover:text-terracotta-600">About</a>
-            <a href="#contact" className="transition hover:text-terracotta-600">Contact</a>
-          </div>
-        </nav>
-
-        <div className="text-sm text-gray-500 sm:text-right">
-          <p className="font-semibold text-indigoClay-900">Built for Smart India Hackathon 2026</p>
-          <p className="mt-2">Team CodeDiggers</p>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-8 max-w-7xl border-t border-terracotta-100 pt-4 text-center text-xs text-gray-400">
-        © 2026 Kalasetu. All rights reserved.
       </div>
     </footer>
->>>>>>> 8bb3e25101d941776ab5d69cd85b258417091ffe
   );
-}
+};
 

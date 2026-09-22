@@ -7,6 +7,7 @@ const Product = require('./models/Product');
 const { generateCatalog } = require('./controllers/aiController');
 const { protect } = require('./middleware/authMiddleware');
 const { seedInitialData } = require('./seeds/seedData');
+const { checkRateLimit } = require('./services/rateLimiter');
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +24,18 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/whatsapp') || req.path.startsWith('/api/assistant')) {
+    if (!checkRateLimit(req)) {
+      return res.status(429).json({
+        ok: false,
+        message: 'Too many requests. Please wait a moment before sending another message.'
+      });
+    }
+  }
+  next();
+});
+
 // Static uploads folder for enhanced and uploaded craft images
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
@@ -34,6 +47,7 @@ const cartRoutes = require('./routes/cartRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
 const artisanRoutes = require('./routes/artisanRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const whatsappRoutes = require('./routes/whatsappRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -42,6 +56,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/favourites', favouriteRoutes);
 app.use('/api/artisans', artisanRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/whatsapp', whatsappRoutes);
 const catalogCompatibilityRoutes = express.Router();
 catalogCompatibilityRoutes.post(['/catalog', '/catalogue', '/catalouge'], protect, generateCatalog);
 app.use('/api', catalogCompatibilityRoutes);
@@ -100,6 +115,7 @@ const startServer = async () => {
     console.log(`🎨 Artisans API:       http://localhost:${PORT}/api/artisans`);
     console.log(`🛒 Cart & Orders API:  http://localhost:${PORT}/api/orders`);
     console.log(`🧠 AI Features:        http://localhost:${PORT}/api/ai/catalog`);
+    console.log(`💬 WhatsApp Support:   http://localhost:${PORT}/api/whatsapp/status`);
     console.log(`======================================================\n`);
   });
 };
