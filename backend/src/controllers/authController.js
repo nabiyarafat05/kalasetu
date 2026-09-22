@@ -2,6 +2,7 @@ const User = require('../models/User');
 const { isConnectedToMongo, memoryStore } = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { normalizePhone, isValidPhone, isValidEmail, isValidName } = require('../utils/validation');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'kalasetu_artisan_secret_key_2026';
 
@@ -103,11 +104,15 @@ const registerUser = async (req, res) => {
       shippingAddress
     } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ success: false, message: 'Please provide name, email, and password.' });
+    if (!isValidName(name) || !isValidEmail(email) || typeof password !== 'string' || password.length < 8 || password.length > 128) {
+      return res.status(400).json({ success: false, message: 'Please provide a valid name, email, and password of 8-128 characters.' });
+    }
+    if (phone && !isValidPhone(phone)) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid 10-digit mobile number.' });
     }
 
     const normalizedEmail = email.toLowerCase().trim();
+    const normalizedPhone = phone ? `+91 ${normalizePhone(phone)}` : '+91 98765 43210';
 
     if (isConnectedToMongo()) {
       const userExists = await User.findOne({ email: normalizedEmail });
@@ -119,7 +124,7 @@ const registerUser = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       const user = await User.create({
-        name,
+        name: name.trim(),
         email: normalizedEmail,
         password: hashedPassword,
         role: role === 'buyer' ? 'buyer' : 'artisan',
@@ -129,7 +134,7 @@ const registerUser = async (req, res) => {
         bio: bio || (role === 'artisan' ? 'Dedicated Indian master craftsperson.' : 'Conscious handicraft lover.'),
         location: location || (role === 'artisan' ? 'Rajasthan, India' : 'Mumbai, India'),
         region: region || (role === 'artisan' ? 'Rajasthan' : 'Maharashtra'),
-        phone: phone || '+91 98765 43210',
+        phone: phone ? `+91 ${normalizePhone(phone)}` : '+91 98765 43210',
         avatar: role === 'buyer'
           ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
           : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
@@ -162,7 +167,7 @@ const registerUser = async (req, res) => {
         bio: bio || (role === 'artisan' ? 'Dedicated Indian master craftsperson.' : 'Conscious handicraft lover.'),
         location: location || (role === 'artisan' ? 'Rajasthan, India' : 'Mumbai, India'),
         region: region || (role === 'artisan' ? 'Rajasthan' : 'Maharashtra'),
-        phone: phone || '+91 98765 43210',
+        phone: normalizedPhone,
         avatar: role === 'buyer'
           ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
           : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
@@ -192,8 +197,8 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: 'Please provide email and password.' });
+    if (!isValidEmail(email) || typeof password !== 'string' || !password.trim()) {
+      return res.status(400).json({ success: false, message: 'Please provide a valid email and password.' });
     }
 
     const normalizedEmail = email.toLowerCase().trim();
@@ -279,7 +284,23 @@ const getCurrentUser = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;
-    const updates = req.body;
+    const updates = { ...req.body };
+    if (updates.name !== undefined && !isValidName(updates.name)) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid name.' });
+    }
+    if (updates.email !== undefined && !isValidEmail(updates.email)) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid email address.' });
+    }
+    if (updates.phone !== undefined && !isValidPhone(updates.phone)) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid 10-digit mobile number.' });
+    }
+    if (updates.name !== undefined) updates.name = updates.name.trim();
+    if (updates.email !== undefined) updates.email = updates.email.toLowerCase().trim();
+    if (updates.phone !== undefined) updates.phone = `+91 ${normalizePhone(updates.phone)}`;
+    const allowedFields = ['name', 'email', 'phone', 'location', 'region', 'bio', 'craftSpecialty', 'craftLineage', 'shippingAddress'];
+    for (const key of Object.keys(updates)) {
+      if (!allowedFields.includes(key)) delete updates[key];
+    }
 
     if (isConnectedToMongo()) {
       const updated = await User.findByIdAndUpdate(userId, updates, { new: true, runValidators: true });

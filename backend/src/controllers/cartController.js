@@ -1,5 +1,6 @@
 const Cart = require('../models/Cart');
 const { isConnectedToMongo, memoryStore } = require('../config/db');
+const { isValidName, isPositiveNumber, isPositiveInteger } = require('../utils/validation');
 
 /**
  * @route GET /api/cart
@@ -36,13 +37,13 @@ const addToCart = async (req, res) => {
     const userId = req.user?.id || req.user?._id || '65e000000000000000000002';
     const { productId, name, price, quantity = 1, imageUrl, category, artisanId, artisanName } = req.body;
 
-    if (!productId || !name || price === undefined) {
+    if (!productId || !isValidName(name, 1, 200) || !isPositiveNumber(price) || !isPositiveInteger(quantity)) {
       return res.status(400).json({ success: false, message: 'Product details are required.' });
     }
 
     const itemPayload = {
       productId: productId.toString(),
-      name,
+      name: name.trim(),
       price: Number(price),
       quantity: Number(quantity),
       imageUrl: imageUrl || '',

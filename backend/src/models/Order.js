@@ -11,12 +11,14 @@ const OrderItemSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+      required: true,
+      min: 0.01
   },
   quantity: {
     type: Number,
     required: true,
     min: 1,
+    validate: Number.isInteger,
     default: 1
   },
   imageUrl: {
@@ -63,7 +65,8 @@ const OrderSchema = new mongoose.Schema(
     items: [OrderItemSchema],
     totalAmount: {
       type: Number,
-      required: true
+      required: true,
+      min: 0.01
     },
     directArtisanShare: {
       type: Number,

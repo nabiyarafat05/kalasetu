@@ -14,11 +14,16 @@ const ProductSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Product name is required'],
-      trim: true
+      trim: true,
+      minlength: 3,
+      maxlength: 150
     },
     description: {
       type: String,
-      required: [true, 'Product description is required']
+      required: [true, 'Product description is required'],
+      minlength: 10,
+      maxlength: 5000,
+      trim: true
     },
     hindiDescription: {
       type: String,
@@ -52,7 +57,7 @@ const ProductSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, 'Price is required'],
-      min: 0
+      min: 0.01
     },
     imageUrl: {
       type: String,

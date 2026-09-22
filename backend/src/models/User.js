@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'Email is required'],
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Please enter a valid email address']
     },
     password: {
       type: String,
@@ -49,7 +50,8 @@ const UserSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      default: '+91 98765 43210'
+      default: '+91 98765 43210',
+      match: [/^(?:\+91\s?)?[6-9]\d{9}$/, 'Please enter a valid 10-digit mobile number']
     },
     avatar: {
       type: String,

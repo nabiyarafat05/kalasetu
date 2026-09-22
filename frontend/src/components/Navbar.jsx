@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useFavourite } from '../context/FavouriteContext';
+import { BrandLogo } from './BrandLogo';
 import {
   Sparkles,
   Languages,
@@ -16,15 +17,11 @@ import {
   Menu,
   X,
   Home,
-  ShoppingBag,
   ShoppingCart,
   Heart,
   Store,
   PackageCheck,
-  UserCheck,
-  ChevronDown,
-  Layers,
-  Sparkle
+  ChevronDown
 } from 'lucide-react';
 
 export const Navbar = ({ currentTab, setCurrentTab }) => {
@@ -88,8 +85,8 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
             onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-terracotta-600 to-sandalwood-400 flex items-center justify-center text-white shadow-md shadow-terracotta-500/20 group-hover:scale-105 transition transform">
-              <span className="text-2xl">🪔</span>
+            <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden">
+              <BrandLogo className="w-full h-full object-contain" alt="KalaSetu logo" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
@@ -265,7 +262,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                   className="flex items-center gap-2 p-1 sm:px-2 sm:py-1 rounded-full hover:bg-gray-100 transition border border-transparent hover:border-gray-200"
                 >
                   <img
-                    src={user.avatar || (isBuyer ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80')}
+                    src={user.name === 'Radha Devi' ? '/radha-devi.jpeg' : (user.avatar || (isBuyer ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'))}
                     alt={user.name}
                     className="w-9 h-9 rounded-full object-cover border-2 border-sandalwood-300 ring-1 ring-terracotta-200"
                   />

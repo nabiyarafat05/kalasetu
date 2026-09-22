@@ -12,7 +12,6 @@ const getHeaders = (isFormData = false) => {
 };
 
 export const api = {
-  // Auth Endpoints
   auth: {
     login: async (email, password) => {
       const res = await fetch(`${API_BASE}/auth/login`, {
@@ -54,7 +53,6 @@ export const api = {
     }
   },
 
-  // Artisans Directory
   artisans: {
     getAll: async () => {
       const res = await fetch(`${API_BASE}/artisans`);
@@ -66,7 +64,6 @@ export const api = {
     }
   },
 
-  // Products Endpoints
   products: {
     getAll: async (params = {}) => {
       const query = new URLSearchParams(params).toString();
@@ -109,7 +106,6 @@ export const api = {
     }
   },
 
-  // Cart Endpoints
   cart: {
     get: async () => {
       const res = await fetch(`${API_BASE}/cart`, {
@@ -141,7 +137,6 @@ export const api = {
     }
   },
 
-  // Favourites Endpoints
   favourites: {
     get: async () => {
       const res = await fetch(`${API_BASE}/favourites`, {
@@ -158,7 +153,6 @@ export const api = {
     }
   },
 
-  // Orders Endpoints
   orders: {
     create: async (orderData) => {
       const res = await fetch(`${API_BASE}/orders`, {
@@ -190,7 +184,6 @@ export const api = {
     }
   },
 
-  // AI Endpoints
   ai: {
     generateCatalog: async (craftData) => {
       const res = await fetch(`${API_BASE}/ai/catalog`, {

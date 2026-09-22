@@ -13,6 +13,7 @@ import {
   Layers,
   HelpCircle
 } from 'lucide-react';
+import { isPositiveNumber } from '../utils/validation';
 
 export const PriceSuggestion = ({ onApplyToProduct }) => {
   const { lang, t } = useLanguage();
@@ -28,6 +29,7 @@ export const PriceSuggestion = ({ onApplyToProduct }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const [pricingResult, setPricingResult] = useState({
     minimumPrice: 1350,
     recommendedPrice: 1850,
@@ -57,6 +59,17 @@ export const PriceSuggestion = ({ onApplyToProduct }) => {
 
   const handleCalculate = async (e) => {
     if (e) e.preventDefault();
+    if (loading) return;
+    const nextErrors = {};
+    if (!formData.material.trim()) nextErrors.material = 'Material is required.';
+    if (!isPositiveNumber(formData.rawMaterialCost)) nextErrors.rawMaterialCost = 'Enter a valid positive cost.';
+    if (!isPositiveNumber(formData.productionCost)) nextErrors.productionCost = 'Enter a valid positive cost.';
+    if (!isPositiveNumber(formData.laborHours) || Number(formData.laborHours) > 300) nextErrors.laborHours = 'Enter labor hours from 1 to 300.';
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      addToast('Please correct the pricing inputs.', 'error');
+      return;
+    }
 
     setLoading(true);
     try {
@@ -144,6 +157,7 @@ export const PriceSuggestion = ({ onApplyToProduct }) => {
                 placeholder="e.g. Sheesham Wood, Brass, Silk"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-medium"
               />
+              {errors.material && <p className="text-xs text-red-600 mt-1">{errors.material}</p>}
             </div>
           </div>
 
@@ -162,6 +176,7 @@ export const PriceSuggestion = ({ onApplyToProduct }) => {
                   onChange={(e) => setFormData({ ...formData, rawMaterialCost: Number(e.target.value) })}
                   className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-bold"
                 />
+                {errors.rawMaterialCost && <p className="text-xs text-red-600 mt-1">{errors.rawMaterialCost}</p>}
               </div>
             </div>
 
@@ -178,6 +193,7 @@ export const PriceSuggestion = ({ onApplyToProduct }) => {
                 onChange={(e) => setFormData({ ...formData, laborHours: Number(e.target.value) })}
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm text-indigoClay-900 focus:ring-2 focus:ring-terracotta-500 font-bold"
               />
+              {errors.laborHours && <p className="text-xs text-red-600 mt-1">{errors.laborHours}</p>}
             </div>
 
             <div>

@@ -98,7 +98,8 @@ export const BuyerProductCard = ({ product, onViewDetails, onSelectArtisan }) =>
             }}
             className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-terracotta-600 transition mb-1"
           >
-            <span className="font-serif text-terracotta-700 font-bold">🪔 {product.artisanName || 'Master Artisan'}</span>
+            <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-5 h-5 object-contain" />
+            <span className="font-serif text-terracotta-700 font-bold">{product.artisanName || 'Master Artisan'}</span>
             <span className="text-[10px] text-gray-400">• {product.location?.split(',')[0]}</span>
           </div>
 

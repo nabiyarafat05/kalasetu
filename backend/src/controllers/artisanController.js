@@ -14,7 +14,7 @@ const MASTER_ARTISANS = [
     location: 'Sanganer, Jaipur, Rajasthan',
     region: 'Rajasthan',
     bio: 'Specializing in GI-tagged quartz pottery, Persian turquoise glazes, and eco-friendly lead-free botanical colors. Mentoring 12 village women in ceramic craft.',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
+    avatar: '/radha-devi.jpeg',
     awards: 'National Handicrafts Merit Certificate (2018), State Master Artisan Honor'
   },
   {

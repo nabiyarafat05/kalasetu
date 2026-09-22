@@ -97,16 +97,7 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false, message: res.data?.message || 'Registration failed' };
     } catch (error) {
-      const newUser = {
-        id: 'usr_' + Date.now(),
-        ...userData,
-        avatar: userData.role === 'buyer'
-          ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
-          : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'
-      };
-      setUser(newUser);
-      setToken('demo_token');
-      return { success: true, user: newUser };
+      return { success: false, message: 'Unable to create account. Please try again.' };
     } finally {
       setLoading(false);
     }
@@ -146,6 +137,7 @@ export const AuthProvider = ({ children }) => {
         setUser(res.data.user);
         return { success: true, user: res.data.user };
       }
+      return { success: false, message: res.data?.message || 'Profile update failed.' };
     } catch (e) {
       setUser(prev => ({ ...prev, ...profileData }));
       return { success: true, user: { ...user, ...profileData } };

@@ -15,6 +15,7 @@ import {
   Sparkles,
   ArrowRight
 } from 'lucide-react';
+import { isPositiveInteger, validateAddress } from '../utils/validation';
 
 export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted }) => {
   const { lang, t } = useLanguage();
@@ -35,17 +36,24 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [orderSuccessData, setOrderSuccessData] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const directArtisanShare = Math.round(totalAmount * 0.85);
 
   const handleInputChange = (e) => {
     setShippingAddress({ ...shippingAddress, [e.target.name]: e.target.value });
+    setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+    if (loading) return;
 
-    if (!shippingAddress.fullName || !shippingAddress.street || !shippingAddress.city || !shippingAddress.phone) {
+    const nextErrors = validateAddress(shippingAddress);
+    if (!items.length) nextErrors.items = 'Your cart is empty.';
+    if (items.some((item) => !isPositiveInteger(item.quantity) || !(Number(item.price) > 0))) nextErrors.items = 'Cart contains invalid item information.';
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
       addToast(lang === 'hi' ? 'कृपया पूरा डिलीवरी पता भरें' : 'Please complete shipping address', 'error');
       return;
     }
@@ -166,6 +174,7 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
                     onChange={handleInputChange}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                   />
+                  {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
                 </div>
 
                 <div className="col-span-2">
@@ -178,6 +187,7 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
                     onChange={handleInputChange}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                   />
+                  {errors.phone && <p className="text-xs text-red-600 mt-1">{errors.phone}</p>}
                 </div>
 
                 <div className="col-span-2">
@@ -190,6 +200,7 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
                     onChange={handleInputChange}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                   />
+                  {errors.street && <p className="text-xs text-red-600 mt-1">{errors.street}</p>}
                 </div>
 
                 <div>
@@ -202,6 +213,7 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
                     onChange={handleInputChange}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                   />
+                  {errors.city && <p className="text-xs text-red-600 mt-1">{errors.city}</p>}
                 </div>
 
                 <div>
@@ -214,6 +226,7 @@ export const CheckoutModal = ({ items, totalAmount, onClose, onOrderCompleted })
                     onChange={handleInputChange}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 text-xs text-indigoClay-900"
                   />
+                  {errors.postalCode && <p className="text-xs text-red-600 mt-1">{errors.postalCode}</p>}
                 </div>
               </div>
             </div>

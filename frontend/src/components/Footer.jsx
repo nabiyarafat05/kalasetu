@@ -112,4 +112,3 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
     </footer>
   );
 };
-

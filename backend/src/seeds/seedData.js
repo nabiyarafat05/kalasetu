@@ -62,8 +62,8 @@ const SEED_PRODUCTS = [
     location: 'Srinagar, Jammu & Kashmir',
     region: 'Kashmir',
     price: 6400,
-    imageUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
-    enhancedImageUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=90&sat=15&con=10',
+    imageUrl: 'https://images.unsplash.com/photo-1772531073452-7d3d121d6502?auto=format&fit=crop&w=800&q=80',
+    enhancedImageUrl: 'https://images.unsplash.com/photo-1772531073452-7d3d121d6502?auto=format&fit=crop&w=1200&q=90&sat=15&con=10',
     status: 'active',
     artisanName: 'Bashir Ahmed',
     aiCatalogData: {
@@ -107,8 +107,8 @@ const SEED_PRODUCTS = [
     location: 'Saharanpur, Uttar Pradesh',
     region: 'Uttar Pradesh',
     price: 1450,
-    imageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
-    enhancedImageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=90',
+    imageUrl: 'https://images.unsplash.com/photo-1739281468485-dfb4231a004d?auto=format&fit=crop&w=800&q=80',
+    enhancedImageUrl: 'https://images.unsplash.com/photo-1739281468485-dfb4231a004d?auto=format&fit=crop&w=1200&q=90',
     status: 'active',
     artisanName: 'Mohammad Rashid',
     aiCatalogData: {
@@ -152,8 +152,8 @@ const SEED_PRODUCTS = [
     location: 'Madhubani, Bihar',
     region: 'Bihar',
     price: 2200,
-    imageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=800&q=80',
-    enhancedImageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=1200&q=90',
+    imageUrl: 'https://images.unsplash.com/photo-1714248375969-a48cdc603a3f?auto=format&fit=crop&w=800&q=80',
+    enhancedImageUrl: 'https://images.unsplash.com/photo-1714248375969-a48cdc603a3f?auto=format&fit=crop&w=1200&q=90',
     status: 'active',
     artisanName: 'Shanti Devi',
     aiCatalogData: {
@@ -197,8 +197,8 @@ const SEED_PRODUCTS = [
     location: 'Kondagaon, Bastar, Chhattisgarh',
     region: 'Chhattisgarh',
     price: 3200,
-    imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
-    enhancedImageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=90',
+    imageUrl: 'https://images.unsplash.com/photo-1763475945300-02cf0355b078?auto=format&fit=crop&w=800&q=80',
+    enhancedImageUrl: 'https://images.unsplash.com/photo-1763475945300-02cf0355b078?auto=format&fit=crop&w=1200&q=90',
     status: 'active',
     artisanName: 'Budhram Ghadwa',
     aiCatalogData: {
@@ -242,8 +242,8 @@ const SEED_PRODUCTS = [
     location: 'Channapatna, Ramanagara, Karnataka',
     region: 'Karnataka',
     price: 950,
-    imageUrl: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=800&q=80',
-    enhancedImageUrl: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1200&q=90',
+    imageUrl: 'https://images.unsplash.com/photo-1743265614902-e9313146a113?auto=format&fit=crop&w=800&q=80',
+    enhancedImageUrl: 'https://images.unsplash.com/photo-1743265614902-e9313146a113?auto=format&fit=crop&w=1200&q=90',
     status: 'sold',
     artisanName: 'Radha Devi',
     aiCatalogData: {
@@ -325,7 +325,7 @@ const SEED_SAMPLE_ORDERS = [
         name: 'Saharanpur Hand-Chiseled Sheesham Wood Elephant',
         price: 1450,
         quantity: 1,
-        imageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+        imageUrl: 'https://images.unsplash.com/photo-1739281468485-dfb4231a004d?auto=format&fit=crop&w=800&q=80',
         category: 'Woodwork & Carvings',
         artisanId: '65e000000000000000000004',
         artisanName: 'Mohammad Rashid'
@@ -357,6 +357,13 @@ const seedInitialData = async (Product, memoryStore, isConnected) => {
       if (count === 0) {
         await Product.insertMany(SEED_PRODUCTS);
         console.log(`🌿 Seeded ${SEED_PRODUCTS.length} authentic Indian artisan products to MongoDB.`);
+      } else {
+        await Promise.all(SEED_PRODUCTS.map(({ id, imageUrl, enhancedImageUrl }) =>
+          Product.updateOne(
+            { id },
+            { $set: { imageUrl, enhancedImageUrl } }
+          )
+        ));
       }
     } else {
       // In-Memory store
