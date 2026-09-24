@@ -7,15 +7,14 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
         name: 'Kala Setu',
         short_name: 'KalaSetu',
         description: 'AI-Powered Digital Platform & Two-Sided Marketplace for Indian Artisans',
-        theme_color: '#C85A32',
-        background_color: '#FAF6F0',
-        display: 'standalone',
         start_url: '/',
+        display: 'standalone',
+        background_color: '#FAF6F0',
+        theme_color: '#C85A32',
         icons: [
           {
             src: '/pwa-192x192.png',
