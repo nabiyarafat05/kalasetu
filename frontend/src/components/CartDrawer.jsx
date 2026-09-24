@@ -41,11 +41,11 @@ export const CartDrawer = () => {
           className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
         />
 
-        <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-          <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between border-l border-terracotta-100 animate-slideLeft">
+        <div className="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10">
+          <div className="flex h-full w-screen max-w-md flex-col justify-between border-l border-terracotta-100 bg-white shadow-2xl animate-slideLeft">
             
             {/* Header */}
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3 border-b border-gray-100 p-4 sm:p-6">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
                   <ShoppingCart className="w-5 h-5" />
@@ -65,12 +65,12 @@ export const CartDrawer = () => {
             </div>
 
             {/* Cart Items List */}
-            <div className="p-6 overflow-y-auto flex-1 space-y-4">
+            <div className="flex-1 space-y-4 overflow-y-auto p-4 sm:p-6">
               {cartItems.length > 0 ? (
                 cartItems.map((item) => (
                   <div
                     key={item.productId}
-                    className="p-3.5 rounded-2xl bg-khadi border border-terracotta-100 flex items-center gap-3.5"
+                    className="flex min-w-0 items-center gap-2.5 rounded-2xl border border-terracotta-100 bg-khadi p-3.5 sm:gap-3.5"
                   >
                     <img
                       src={item.imageUrl || 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=400&q=80'}
@@ -90,7 +90,7 @@ export const CartDrawer = () => {
                     </div>
 
                     {/* Quantity Controls */}
-                    <div className="flex flex-col items-end gap-2">
+                    <div className="flex shrink-0 flex-col items-end gap-2">
                       <div className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-lg p-1 shadow-2xs">
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
@@ -131,7 +131,7 @@ export const CartDrawer = () => {
 
             {/* Bottom Summary & Checkout */}
             {cartItems.length > 0 && (
-              <div className="p-6 border-t border-gray-100 bg-white space-y-4 shadow-lg">
+              <div className="space-y-4 border-t border-gray-100 bg-white p-4 shadow-lg sm:p-6">
                 {/* Fair Living Wage Direct Share Badge */}
                 <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">

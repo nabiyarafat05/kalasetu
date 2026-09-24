@@ -65,10 +65,10 @@ export const ProductDetail = ({ product, onBack, onEdit, onOpenCraftPassport, on
   const priceData = currentProduct.priceSuggestion;
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 animate-fadeIn pb-16">
+    <div className="mx-auto min-w-0 max-w-full space-y-6 overflow-x-hidden pb-16 animate-fadeIn lg:max-w-5xl">
       
       {/* Top Navigation Bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <button
           onClick={onBack}
           className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-terracotta-700 hover:text-terracotta-800 bg-white px-3.5 py-2 rounded-xl border border-terracotta-200 shadow-xs transition"
@@ -78,7 +78,7 @@ export const ProductDetail = ({ product, onBack, onEdit, onOpenCraftPassport, on
         </button>
 
         {/* Action Toolbar */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           <button
             onClick={() => setIsShareModalOpen(true)}
             className="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 transition"

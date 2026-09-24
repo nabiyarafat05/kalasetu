@@ -118,11 +118,11 @@ export const OrdersPage = ({ onSelectProduct }) => {
       </div>
 
       {/* Two-Sided Tab Switcher (Buyer Orders vs Artisan Incoming Orders) */}
-      <div className="flex items-center justify-center">
-        <div className="bg-white p-1.5 rounded-2xl border border-terracotta-200 shadow-xs flex items-center gap-2 text-xs font-bold">
+      <div className="flex w-full items-center justify-center">
+        <div className="grid w-full max-w-xl grid-cols-1 gap-1.5 rounded-2xl border border-terracotta-200 bg-white p-1.5 text-xs font-bold shadow-xs min-[360px]:grid-cols-2">
           <button
             onClick={() => setActiveView('buyer')}
-            className={`px-5 py-2.5 rounded-xl transition ${
+            className={`rounded-xl px-3 py-2.5 transition sm:px-5 ${
               activeView === 'buyer'
                 ? 'bg-terracotta-600 text-white shadow-sm'
                 : 'text-gray-700 hover:text-terracotta-600'
@@ -133,7 +133,7 @@ export const OrdersPage = ({ onSelectProduct }) => {
 
           <button
             onClick={() => setActiveView('artisan')}
-            className={`px-5 py-2.5 rounded-xl transition ${
+            className={`rounded-xl px-3 py-2.5 transition sm:px-5 ${
               activeView === 'artisan'
                 ? 'bg-terracotta-600 text-white shadow-sm'
                 : 'text-gray-700 hover:text-terracotta-600'
@@ -161,7 +161,7 @@ export const OrdersPage = ({ onSelectProduct }) => {
             return (
               <div
                 key={order.id || order._id}
-                className="bg-white rounded-3xl p-6 border border-terracotta-200 shadow-craft space-y-5"
+                className="space-y-5 rounded-3xl border border-terracotta-200 bg-white p-4 shadow-craft sm:p-6"
               >
                 {/* Top Order Metadata */}
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 pb-4">
@@ -202,16 +202,16 @@ export const OrdersPage = ({ onSelectProduct }) => {
                   {order.items?.map((it, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-2xl bg-khadi border border-terracotta-100 flex items-center justify-between gap-3"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-terracotta-100 bg-khadi p-3.5"
                     >
-                      <div className="flex items-center gap-3.5">
+                      <div className="flex min-w-0 items-center gap-3.5">
                         <img
                           src={it.imageUrl || 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=400&q=80'}
                           alt={it.name}
                           className="w-14 h-14 rounded-xl object-cover border border-terracotta-200 flex-shrink-0"
                         />
-                        <div>
-                          <h4 className="font-bold text-xs sm:text-sm text-indigoClay-900">
+                        <div className="min-w-0">
+                          <h4 className="break-words text-xs font-bold text-indigoClay-900 sm:text-sm">
                             {it.name}
                           </h4>
                           <p className="text-[11px] text-gray-500">

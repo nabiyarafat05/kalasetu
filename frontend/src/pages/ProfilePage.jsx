@@ -239,7 +239,7 @@ export const ProfilePage = ({ onBack }) => {
               <span>Default Delivery Address</span>
             </h3>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-1 gap-3 text-xs min-[360px]:grid-cols-2">
               <div className="col-span-2">
                 <input
                   type="text"

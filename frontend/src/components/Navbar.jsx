@@ -77,23 +77,23 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-terracotta-100 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 py-2">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center justify-between gap-2 py-2 sm:gap-4">
           
           {/* Logo & Brand */}
           <div 
             onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex min-w-0 items-center gap-2 cursor-pointer group sm:gap-3"
           >
             <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden">
               <BrandLogo className="w-full h-full object-contain" alt="KalaSetu logo" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-serif text-2xl font-extrabold tracking-tight text-terracotta-700">
+            <div className="min-w-0">
+              <div className="flex min-w-0 items-center gap-1.5">
+                <span className="truncate font-serif text-xl font-extrabold tracking-tight text-terracotta-700 sm:text-2xl">
                   {lang === 'hi' ? 'कला सेतु' : 'KalaSetu'}
                 </span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border ${
+                <span className={`hidden text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border sm:inline-flex ${
                   isArtisan
                     ? 'bg-sandalwood-100 text-sandalwood-800 border-sandalwood-300'
                     : 'bg-emerald-100 text-emerald-800 border-emerald-300'
@@ -202,7 +202,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-3">
             
             {/* Wishlist Icon with badge */}
             <button

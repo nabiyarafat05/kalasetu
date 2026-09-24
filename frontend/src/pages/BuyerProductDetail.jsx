@@ -45,10 +45,10 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan, onOpenCra
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-fadeIn pb-16">
+    <div className="mx-auto min-w-0 max-w-full space-y-8 overflow-x-hidden pb-16 animate-fadeIn lg:max-w-5xl">
       
       {/* Top Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <button
           onClick={onBack}
           className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-terracotta-700 hover:text-terracotta-800 bg-white px-4 py-2.5 rounded-2xl border border-terracotta-200 shadow-xs transition"
@@ -173,7 +173,7 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan, onOpenCra
             </div>
 
             {/* Action Buttons: Add to Cart & Buy Now */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 gap-3 pt-2 min-[360px]:grid-cols-2">
               <button
                 type="button"
                 onClick={() => addToCart(product, 1)}
@@ -254,7 +254,7 @@ export const BuyerProductDetail = ({ product, onBack, onSelectArtisan, onOpenCra
               <span>Craft & Material Details</span>
             </h3>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-1 gap-3 text-xs min-[360px]:grid-cols-2">
               <div className="p-3 rounded-xl bg-gray-50 border border-gray-100">
                 <span className="text-gray-400 block text-[10px] uppercase font-bold">{t('material')}</span>
                 <span className="font-semibold text-indigoClay-900 mt-0.5 block">{product.material || 'Organic Materials'}</span>

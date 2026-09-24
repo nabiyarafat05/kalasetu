@@ -72,7 +72,7 @@ export const MarketplaceHome = ({ onSelectProduct, onSelectArtisan }) => {
   }, [selectedCategory, selectedRegion, priceSort, searchTerm]);
 
   return (
-    <div className="space-y-10 animate-fadeIn pb-16">
+    <div className="min-w-0 max-w-full space-y-10 overflow-x-hidden pb-16 animate-fadeIn">
       
       {/* 1. Hero Marketplace Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta-800 via-indigoClay-900 to-terracotta-900 text-white p-6 sm:p-10 shadow-xl">
@@ -180,7 +180,7 @@ export const MarketplaceHome = ({ onSelectProduct, onSelectArtisan }) => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <div key={n} className="bg-white rounded-3xl p-4 border border-gray-100 animate-pulse space-y-4">
                 <div className="aspect-square bg-gray-200 rounded-2xl"></div>
@@ -190,7 +190,7 @@ export const MarketplaceHome = ({ onSelectProduct, onSelectArtisan }) => {
             ))}
           </div>
         ) : products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {products.map((product) => (
               <BuyerProductCard
                 key={product.id || product._id}

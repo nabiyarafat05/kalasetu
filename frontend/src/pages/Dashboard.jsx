@@ -112,7 +112,7 @@ export const Dashboard = ({ onNavigate, onSelectProduct, onEditProduct }) => {
   const pendingOrdersCount = incomingOrders.filter(o => o.orderStatus !== 'delivered' && o.orderStatus !== 'cancelled').length;
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="min-w-0 max-w-full space-y-8 overflow-x-hidden animate-fadeIn">
       
       {/* 1. Artisan Welcome Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta-700 via-terracotta-600 to-sandalwood-500 text-white p-6 sm:p-8 shadow-xl">
@@ -187,7 +187,7 @@ export const Dashboard = ({ onNavigate, onSelectProduct, onEditProduct }) => {
           <span>{t('quickActions')}</span>
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
           
           {/* Tile 1: Capture Product */}
           <button
@@ -272,7 +272,7 @@ export const Dashboard = ({ onNavigate, onSelectProduct, onEditProduct }) => {
       </div>
 
       {/* 4. Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-4 sm:gap-4">
         <div className="bg-white p-4 rounded-2xl border border-terracotta-100 shadow-sm">
           <div className="flex items-center justify-between text-gray-500 text-xs font-semibold">
             <span>{t('statsTotal')}</span>

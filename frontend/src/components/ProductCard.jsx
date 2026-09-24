@@ -9,7 +9,7 @@ export const ProductCard = ({ product, onViewDetails, onEdit, onToggleStatus }) 
   const displayImage = product.enhancedImageUrl || product.imageUrl;
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden border border-terracotta-100 shadow-craft hover:shadow-craft-hover transition-all duration-300 flex flex-col justify-between">
+    <div className="group flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border border-terracotta-100 bg-white shadow-craft transition-all duration-300 hover:shadow-craft-hover">
       
       {/* Top Image Container */}
       <div className="relative aspect-square overflow-hidden bg-gray-100 cursor-pointer" onClick={() => onViewDetails(product)}>
@@ -66,7 +66,7 @@ export const ProductCard = ({ product, onViewDetails, onEdit, onToggleStatus }) 
           {/* Product Name */}
           <h3 
             onClick={() => onViewDetails(product)}
-            className="font-bold text-base text-indigoClay-900 line-clamp-1 group-hover:text-terracotta-600 transition cursor-pointer"
+            className="break-words text-base font-bold text-indigoClay-900 transition group-hover:text-terracotta-600 cursor-pointer"
             title={product.name}
           >
             {product.name}
@@ -79,7 +79,7 @@ export const ProductCard = ({ product, onViewDetails, onEdit, onToggleStatus }) 
         </div>
 
         {/* Bottom Card Actions */}
-        <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+        <div className="mt-4 flex flex-col items-stretch justify-between gap-2 border-t border-gray-100 pt-3 sm:flex-row sm:items-center">
           {/* Quick Status Toggle */}
           <button
             type="button"
@@ -98,7 +98,7 @@ export const ProductCard = ({ product, onViewDetails, onEdit, onToggleStatus }) 
           </button>
 
           {/* Action Buttons: Edit & View */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-end gap-1.5">
             <button
               type="button"
               onClick={(e) => {

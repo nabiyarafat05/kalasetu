@@ -122,7 +122,7 @@ function MainApp() {
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
       {/* Main Content View */}
-      <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-x-hidden px-4 pb-24 pt-6 sm:px-6 md:pb-12 lg:px-8">
+      <main className="mx-auto flex w-full max-w-full min-w-0 flex-1 overflow-x-hidden px-4 pb-24 pt-6 sm:px-6 md:pb-12 lg:max-w-7xl lg:px-8">
         
         {/* Marketplace Home (Buyer Discovery) */}
         {currentTab === 'marketplace' && (

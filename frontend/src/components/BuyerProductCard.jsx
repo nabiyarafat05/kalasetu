@@ -34,7 +34,7 @@ export const BuyerProductCard = ({ product, onViewDetails, onSelectArtisan }) =>
   return (
     <div
       onClick={() => onViewDetails(product)}
-      className="group bg-white rounded-3xl overflow-hidden border border-terracotta-100/80 shadow-craft hover:shadow-craft-hover transition-all duration-300 flex flex-col justify-between cursor-pointer"
+      className="group flex min-w-0 flex-col justify-between overflow-hidden rounded-3xl border border-terracotta-100/80 bg-white shadow-craft transition-all duration-300 hover:shadow-craft-hover cursor-pointer"
     >
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-gray-100">
@@ -47,7 +47,7 @@ export const BuyerProductCard = ({ product, onViewDetails, onSelectArtisan }) =>
 
         {/* Top Badges: Category & Wishlist */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none">
-          <span className="pointer-events-auto bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-full border border-white/20">
+            <span className="pointer-events-auto max-w-[calc(100%-3rem)] truncate rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-md sm:text-xs">
             {product.category}
           </span>
 
@@ -104,7 +104,7 @@ export const BuyerProductCard = ({ product, onViewDetails, onSelectArtisan }) =>
           </div>
 
           {/* Product Name */}
-          <h3 className="font-bold text-sm sm:text-base text-indigoClay-900 line-clamp-1 group-hover:text-terracotta-600 transition">
+            <h3 className="break-words text-sm font-bold text-indigoClay-900 transition group-hover:text-terracotta-600 sm:text-base">
             {product.name}
           </h3>
 
@@ -126,7 +126,7 @@ export const BuyerProductCard = ({ product, onViewDetails, onSelectArtisan }) =>
           <button
             type="button"
             onClick={handleAddToCart}
-            className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm transform active:scale-95"
+            className="flex min-w-0 items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition transform active:scale-95 hover:bg-emerald-700 sm:px-3.5"
           >
             <ShoppingCart className="w-4 h-4" />
             <span className="hidden sm:inline">{t('addToCart')}</span>
