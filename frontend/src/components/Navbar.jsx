@@ -49,6 +49,16 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
     setUserDropdownOpen(false);
   };
 
+  const handleGlobalLanguageToggle = () => {
+    toggleLanguage();
+    const targetLang = lang === 'en' ? 'hi' : 'en';
+    const selectField = document.querySelector('.goog-te-combo');
+    if (selectField) {
+      selectField.value = targetLang;
+      selectField.dispatchEvent(new Event('change'));
+    }
+  };
+
   const readPageHelp = () => {
     const helpMessages = {
       dashboard: lang === 'hi' 
@@ -246,7 +256,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
             {/* Language Switcher */}
             <button
-              onClick={toggleLanguage}
+              onClick={handleGlobalLanguageToggle}
               className="hidden shrink-0 items-center gap-1.5 px-3 py-2 rounded-full bg-terracotta-50 border border-terracotta-200 text-terracotta-800 hover:bg-terracotta-100 font-bold text-xs transition shadow-xs sm:flex"
             >
               <Languages className="w-4 h-4 text-terracotta-600" />
@@ -345,7 +355,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           {/* Quick Language Toggle & Voice Guide in Mobile Menu */}
           <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
             <button
-              onClick={toggleLanguage}
+              onClick={handleGlobalLanguageToggle}
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-terracotta-50 border border-terracotta-200 text-terracotta-800 font-bold text-xs shadow-xs"
             >
               <Languages className="w-4 h-4 text-terracotta-600" />
@@ -402,56 +412,3 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                   onClick={() => handleNavClick('add-product')}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
                     currentTab === 'add-product' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                  }`}
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  {t('addProduct')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('catalog')}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
-                    currentTab === 'catalog' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                  }`}
-                >
-                  <Wand2 className="w-4 h-4 text-sandalwood-500" />
-                  {t('createCatalog')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('enhancer')}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
-                    currentTab === 'enhancer' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                  }`}
-                >
-                  <ImageIcon className="w-4 h-4 text-emerald-600" />
-                  {t('enhanceImage')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('pricing')}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
-                    currentTab === 'pricing' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                  }`}
-                >
-                  <Coins className="w-4 h-4 text-sandalwood-600" />
-                  {t('priceSuggest')}
-                </button>
-              </>
-            )}
-
-            <button
-              onClick={() => handleNavClick('orders')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
-                currentTab === 'orders' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-              }`}
-            >
-              <PackageCheck className="w-4 h-4 text-emerald-600" />
-              {t('orders')}
-            </button>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-};
