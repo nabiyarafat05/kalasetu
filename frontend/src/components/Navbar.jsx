@@ -113,7 +113,6 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
           {/* Desktop Navigation Tabs */}
           <nav className="hidden md:flex items-center gap-1.5 bg-khadi/70 p-1.5 rounded-full border border-terracotta-100/80">
-            {/* Common / Buyer links */}
             <button
               onClick={() => handleNavClick('marketplace')}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
@@ -125,8 +124,6 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               <Store className="w-4 h-4 text-sandalwood-500" />
               {t('marketplace')}
             </button>
-
-            {/* Artisan specific links */}
             {isArtisan && (
               <>
                 <button
@@ -191,7 +188,6 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               </>
             )}
 
-            {/* Orders Tab */}
             <button
               onClick={() => handleNavClick('orders')}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
@@ -204,11 +200,10 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               {t('orders')}
             </button>
           </nav>
-
           {/* Right Action Icons */}
           <div className="ml-1 flex shrink-0 items-center gap-1 sm:ml-auto sm:gap-3">
             
-            {/* Wishlist Icon with badge */}
+            {/* Wishlist Icon */}
             <button
               onClick={() => handleNavClick('favourites')}
               title={t('favourites')}
@@ -226,7 +221,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               )}
             </button>
 
-            {/* Cart Icon with live badge */}
+            {/* Cart Icon */}
             <button
               onClick={() => setIsCartOpen(true)}
               title={t('cart')}
@@ -258,7 +253,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>
             </button>
 
-            {/* User Profile Pill & Dropdown */}
+            {/* User Profile Pill */}
             {user ? (
               <div className="relative">
                 <button
@@ -277,7 +272,6 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                   <ChevronDown className="w-3.5 h-3.5 text-gray-400 hidden sm:block" />
                 </button>
 
-                {/* Dropdown Menu */}
                 {userDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-fadeIn">
                     <div className="px-4 py-2 border-b border-gray-100">
@@ -330,12 +324,15 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               </button>
             )}
 
-            {/* Mobile Hamburger */}
+            {/* Mobile Hamburger Button */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-gray-700 hover:bg-gray-100 md:hidden"
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="shrink-0 rounded-xl p-2 text-gray-700 hover:bg-gray-100 md:hidden"
             >
-              {mobileMenuOpen ? <X className="w-data:image/png;base64,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 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -343,124 +340,116 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-5 space-y-2 shadow-xl animate-fadeIn">
-          {/* Role switcher toggle pill */}
-          <div className="p-3 bg-khadi rounded-2xl border border-terracotta-200 flex items-center justify-between mb-2">
+        <div className="md:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-xl animate-fadeIn">
+          
+          {/* Quick Language Toggle & Voice Guide in Mobile Menu */}
+          <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+            <button
+              onClick={toggleLanguage}
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-terracotta-50 border border-terracotta-200 text-terracotta-800 font-bold text-xs shadow-xs"
+            >
+              <Languages className="w-4 h-4 text-terracotta-600" />
+              <span>{lang === 'en' ? 'Switch to हिन्दी' : 'Switch to English'}</span>
+            </button>
+            <button
+              onClick={readPageHelp}
+              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-sandalwood-50 border border-sandalwood-200 text-sandalwood-800 font-bold text-xs shadow-xs"
+            >
+              <Volume2 className="w-4 h-4 text-sandalwood-700" />
+              <span>{lang === 'hi' ? 'सुने' : 'Listen'}</span>
+            </button>
+          </div>
+
+          {/* Role Switcher Pill */}
+          <div className="p-3 bg-khadi/60 rounded-2xl border border-terracotta-200 flex items-center justify-between">
             <div>
-              <span className="text-[10px] text-gray-500 font-bold uppercase block">Current Experience</span>
-              <span className="text-xs font-bold text-indigoClay-900">{isArtisan ? 'Artisan Studio' : 'Craft Marketplace'}</span>
+              <span className="text-[10px] text-gray-500 font-bold uppercase block">{lang === 'hi' ? 'वर्तमान अनुभव' : 'Current Experience'}</span>
+              <span className="text-xs font-bold text-indigoClay-900">{isArtisan ? (lang === 'hi' ? 'कारीगर स्टूडियो' : 'Artisan Studio') : (lang === 'hi' ? 'शिल्प बाजार' : 'Craft Marketplace')}</span>
             </div>
             <button
               onClick={toggleAppRole}
               className="px-3 py-1.5 rounded-xl bg-terracotta-600 text-white text-[11px] font-bold shadow-xs"
             >
-              {isArtisan ? 'Switch to Buyer' : 'Switch to Artisan'}
+              {isArtisan ? (lang === 'hi' ? 'खरीदार पर जाएं' : 'Switch to Buyer') : (lang === 'hi' ? 'कारीगर पर जाएं' : 'Switch to Artisan')}
             </button>
           </div>
 
-          <button
-            onClick={() => handleNavClick('marketplace')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-              currentTab === 'marketplace' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-            }`}
-          >
-            <Store className="w-5 h-5 text-sandalwood-500" />
-            {t('marketplace')}
-          </button>
+          {/* Navigation Links */}
+          <div className="space-y-1 pt-1">
+            <button
+              onClick={() => handleNavClick('marketplace')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                currentTab === 'marketplace' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+              }`}
+            >
+              <Store className="w-4 h-4 text-sandalwood-500" />
+              {t('marketplace')}
+            </button>
 
-          {isArtisan && (
-            <>
-              <button
-                onClick={() => handleNavClick('dashboard')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-                  currentTab === 'dashboard' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                }`}
-              >
-                <Home className="w-5 h-5" />
-                {t('dashboard')}
-              </button>
+            {isArtisan && (
+              <>
+                <button
+                  onClick={() => handleNavClick('dashboard')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'dashboard' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <Home className="w-4 h-4" />
+                  {t('dashboard')}
+                </button>
 
-              <button
-                onClick={() => handleNavClick('add-product')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-                  currentTab === 'add-product' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                }`}
-              >
-                <PlusCircle className="w-5 h-5 text-terracotta-500" />
-                {t('addProduct')}
-              </button>
+                <button
+                  onClick={() => handleNavClick('add-product')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'add-product' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  {t('addProduct')}
+                </button>
 
-              <button
-                onClick={() => handleNavClick('catalog')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-                  currentTab === 'catalog' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                }`}
-              >
-                <Wand2 className="w-5 h-5 text-sandalwood-500" />
-                {t('createCatalog')}
-              </button>
+                <button
+                  onClick={() => handleNavClick('catalog')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'catalog' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <Wand2 className="w-4 h-4 text-sandalwood-500" />
+                  {t('createCatalog')}
+                </button>
 
-              <button
-                onClick={() => handleNavClick('enhancer')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-                  currentTab === 'enhancer' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                }`}
-              >
-                <ImageIcon className="w-5 h-5 text-emerald-600" />
-                {t('enhanceImage')}
-              </button>
+                <button
+                  onClick={() => handleNavClick('enhancer')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'enhancer' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <ImageIcon className="w-4 h-4 text-emerald-600" />
+                  {t('enhanceImage')}
+                </button>
 
-              <button
-                onClick={() => handleNavClick('pricing')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-                  currentTab === 'pricing' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-                }`}
-              >
-                <Coins className="w-5 h-5 text-sandalwood-600" />
-                {t('priceSuggest')}
-              </button>
-            </>
-          )}
+                <button
+                  onClick={() => handleNavClick('pricing')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'pricing' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <Coins className="w-4 h-4 text-sandalwood-600" />
+                  {t('priceSuggest')}
+                </button>
+              </>
+            )}
 
-          <button
-            onClick={() => handleNavClick('orders')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-              currentTab === 'orders' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-            }`}
-          >
-            <PackageCheck className="w-5 h-5 text-emerald-600" />
-            {t('orders')}
-          </button>
-
-          <button
-            onClick={() => handleNavClick('about')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-              currentTab === 'about' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-            }`}
-          >
-            <Sparkle className="w-5 h-5 text-sandalwood-500" />
-            About Us
-          </button>
-
-          <button
-            onClick={() => handleNavClick('contact')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-              currentTab === 'contact' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-            }`}
-          >
-            <UserCheck className="w-5 h-5 text-indigoClay-600" />
-            Contact Us
-          </button>
-
-          <button
-            onClick={() => handleNavClick('favourites')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-left ${
-              currentTab === 'favourites' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
-            }`}
-          >
-            <Heart className="w-5 h-5 text-red-500" />
-            {t('favourites')} ({favCount})
-          </button>
+            <button
+              onClick={() => handleNavClick('orders')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                currentTab === 'orders' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+              }`}
+            >
+              <PackageCheck className="w-4 h-4 text-emerald-600" />
+              {t('orders')}
+            </button>
+          </div>
         </div>
       )}
     </header>

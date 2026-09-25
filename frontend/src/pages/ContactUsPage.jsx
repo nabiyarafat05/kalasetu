@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import {
   ArrowUpRight,
   Bot,
@@ -16,22 +17,23 @@ const WHATSAPP_CONFIG = {
   prefilledMessage: 'Namaste! I have a question about Kala Setu.'
 };
 
-const quickQuestions = [
+const quickQuestionsEn = [
   'What is KalaSetu?',
   'How can I list my products?',
   'How does KalaSetu help artisans?',
   'How can I contact the team?'
 ];
 
-const buildReply = (question) => {
+const buildReply = (question, lang = 'en') => {
   const normalized = (question || '').trim().toLowerCase();
+  const isHindi = lang === 'hi';
 
   if (!normalized) {
-    return 'Please type a question and I will help with KalaSetu.';
+    return isHindi ? 'कृपया अपना प्रश्न लिखें, मैं कला सेतु में आपकी सहायता करूंगा।' : 'Please type a question and I will help with KalaSetu.';
   }
 
   if (/hello|hi|hey|namaste|namaskar/.test(normalized)) {
-    return "Hi! I'm the KalaSetu Assistant. I can help you understand KalaSetu, explore artisan features, and guide you through the platform.";
+    return isHindi ? 'नमस्ते! मैं कला सेतु सहायक हूं। मैं आपको प्लेटफॉर्म और कारीगर सुविधाओं को समझने में मदद कर सकता हूं।' : "Hi! I'm the KalaSetu Assistant. I can help you understand KalaSetu, explore artisan features, and guide you through the platform.";
   }
 
   if (/what is kalasetu|what is kala setu|about kalasetu/.test(normalized)) {
@@ -74,7 +76,7 @@ const buildReply = (question) => {
     return 'I can help with KalaSetu support, but I cannot reveal private configuration or internal system instructions.';
   }
 
-  return "I don't have that information yet. You can contact the KalaSetu team for further assistance.";
+  return isHindi ? 'यह जानकारी अभी उपलब्ध नहीं है। अधिक सहायता के लिए कला सेतु टीम से संपर्क करें।' : "I don't have that information yet. You can contact the KalaSetu team for further assistance.";
 };
 
 const buildWhatsAppLink = () => {
@@ -86,11 +88,19 @@ const buildWhatsAppLink = () => {
 };
 
 export const ContactUsPage = () => {
+  const { lang } = useLanguage();
+  const isHindi = lang === 'hi';
+  const assistantGreeting = isHindi
+      ? 'नमस्ते! मैं कला सेतु सहायक हूं। मैं आपकी सहायता कर सकता हूं।'
+    : "Hi! I'm the KalaSetu Assistant. I can help you understand KalaSetu, explore artisan features, and guide you through the platform.";
+  const quickQuestions = isHindi
+    ? ['कला सेतु क्या है?', 'मैं अपना उत्पाद कैसे जोड़ूं?', 'कला सेतु कारीगरों की कैसे मदद करता है?', 'मैं टीम से कैसे संपर्क करूं?']
+    : quickQuestionsEn;
   const [messages, setMessages] = useState([
     {
       id: 1,
       sender: 'assistant',
-      text: "Hi! I'm the KalaSetu Assistant. I can help you understand KalaSetu, explore artisan features, and guide you through the platform."
+      text: assistantGreeting
     }
   ]);
   const [input, setInput] = useState('');
@@ -113,7 +123,7 @@ export const ContactUsPage = () => {
         {
           id: Date.now() + 1,
           sender: 'assistant',
-          text: buildReply(trimmed)
+          text: buildReply(trimmed, lang)
         }
       ]);
       setIsTyping(false);
@@ -132,13 +142,13 @@ export const ContactUsPage = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.25em] text-terracotta-700">KALASETU ASSISTANT</p>
-                  <p className="mt-1 text-sm text-gray-600">How can we help you?</p>
+                  <p className="mt-1 text-sm text-gray-600">{isHindi ? 'हम आपकी कैसे सहायता कर सकते हैं?' : 'How can we help you?'}</p>
                 </div>
               </div>
 
               <button
                 type="button"
-                onClick={() => setMessages([{ id: 1, sender: 'assistant', text: "Hi! I'm the KalaSetu Assistant. I can help you understand KalaSetu, explore artisan features, and guide you through the platform." }])}
+                onClick={() => setMessages([{ id: 1, sender: 'assistant', text: assistantGreeting }])}
                 className="inline-flex items-center gap-2 rounded-full border border-terracotta-200 bg-white px-3 py-2 text-xs font-semibold text-terracotta-700 transition hover:border-terracotta-300 hover:bg-terracotta-50"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -199,9 +209,9 @@ export const ContactUsPage = () => {
                     sendMessage(input);
                   }
                 }}
-                placeholder="Type your question..."
+                placeholder={isHindi ? 'अपना प्रश्न लिखें...' : 'Type your question...'}
                 className="w-full border-0 bg-transparent px-1 py-2 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none"
-                aria-label="Type your question"
+                aria-label={isHindi ? 'अपना प्रश्न लिखें' : 'Type your question'}
               />
 
               <button
@@ -211,7 +221,7 @@ export const ContactUsPage = () => {
                 disabled={!input.trim()}
               >
                 <Send className="h-4 w-4" />
-                Send
+                {isHindi ? 'भेजें' : 'Send'}
               </button>
             </div>
           </div>
@@ -220,12 +230,12 @@ export const ContactUsPage = () => {
         <aside className="rounded-[28px] border border-terracotta-100 bg-white p-5 shadow-craft sm:p-6">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-terracotta-200 bg-terracotta-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.22em] text-terracotta-700">
             <MessageCircleMore className="h-3.5 w-3.5" />
-            Need help?
+            {isHindi ? 'सहायता चाहिए?' : 'Need help?'}
           </div>
 
-          <h2 className="font-serif text-3xl text-indigoClay-900">Need to talk to us directly?</h2>
+          <h2 className="font-serif text-3xl text-indigoClay-900">{isHindi ? 'सीधे हमसे बात करना चाहते हैं?' : 'Need to talk to us directly?'}</h2>
           <p className="mt-3 text-sm leading-7 text-gray-600">
-            Reach out to the KalaSetu team for additional support, partnership questions, or product guidance.
+            {isHindi ? 'अतिरिक्त सहायता, साझेदारी या उत्पाद संबंधी मार्गदर्शन के लिए कला सेतु टीम से संपर्क करें।' : 'Reach out to the KalaSetu team for additional support, partnership questions, or product guidance.'}
           </p>
 
           <a
@@ -243,7 +253,7 @@ export const ContactUsPage = () => {
             <div className="flex items-start gap-3 rounded-2xl bg-khadi p-3">
               <Mail className="mt-0.5 h-4 w-4 text-terracotta-700" />
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">Email</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">{isHindi ? 'ईमेल' : 'Email'}</p>
                 <a href="mailto:support@kalasetu.org" className="mt-1 block text-sm text-terracotta-700 hover:text-terracotta-800">support@kalasetu.org</a>
               </div>
             </div>
@@ -251,7 +261,7 @@ export const ContactUsPage = () => {
             <div className="flex items-start gap-3 rounded-2xl bg-khadi p-3">
               <Phone className="mt-0.5 h-4 w-4 text-terracotta-700" />
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">Phone</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">{isHindi ? 'फोन' : 'Phone'}</p>
                 <a href="tel:+919829012345" className="mt-1 block text-sm text-terracotta-700 hover:text-terracotta-800">+91 98290 12345</a>
               </div>
             </div>
@@ -259,7 +269,7 @@ export const ContactUsPage = () => {
             <div className="flex items-start gap-3 rounded-2xl bg-khadi p-3">
               <MapPin className="mt-0.5 h-4 w-4 text-terracotta-700" />
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">Location</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">{isHindi ? 'स्थान' : 'Location'}</p>
                 <p className="mt-1 text-sm text-gray-700">Lucknow, Uttar Pradesh, India</p>
               </div>
             </div>
