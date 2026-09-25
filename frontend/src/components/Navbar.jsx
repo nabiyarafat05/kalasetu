@@ -88,7 +88,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-terracotta-100 shadow-sm">
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center justify-between gap-2 py-2 sm:gap-4">
-          
+
           {/* Logo & Brand */}
           <div 
             onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
@@ -212,7 +212,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           </nav>
           {/* Right Action Icons */}
           <div className="ml-1 flex shrink-0 items-center gap-1 sm:ml-auto sm:gap-3">
-            
+
             {/* Wishlist Icon */}
             <button
               onClick={() => handleNavClick('favourites')}
@@ -262,7 +262,6 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
               <Languages className="w-4 h-4 text-terracotta-600" />
               <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>
             </button>
-
             {/* User Profile Pill */}
             {user ? (
               <div className="relative">
@@ -351,7 +350,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-xl animate-fadeIn">
-          
+
           {/* Quick Language Toggle & Voice Guide in Mobile Menu */}
           <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
             <button
@@ -412,3 +411,56 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                   onClick={() => handleNavClick('add-product')}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
                     currentTab === 'add-product' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  {t('addProduct')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('catalog')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'catalog' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <Wand2 className="w-4 h-4 text-sandalwood-500" />
+                  {t('createCatalog')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('enhancer')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'enhancer' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <ImageIcon className="w-4 h-4 text-emerald-600" />
+                  {t('enhanceImage')}
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('pricing')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                    currentTab === 'pricing' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+                  }`}
+                >
+                  <Coins className="w-4 h-4 text-sandalwood-600" />
+                  {t('priceSuggest')}
+                </button>
+              </>
+            )}
+
+            <button
+              onClick={() => handleNavClick('orders')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-left ${
+                currentTab === 'orders' ? 'bg-terracotta-600 text-white' : 'text-gray-700 hover:bg-terracotta-50'
+              }`}
+            >
+              <PackageCheck className="w-4 h-4 text-emerald-600" />
+              {t('orders')}
+            </button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
