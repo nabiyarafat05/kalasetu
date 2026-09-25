@@ -77,14 +77,14 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-terracotta-100 shadow-sm">
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center justify-between gap-3 py-2 sm:gap-4">
+        <div className="flex min-w-0 items-center justify-between gap-2 py-2 sm:gap-4">
           
           {/* Logo & Brand */}
           <div 
             onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
-            className="flex min-w-0 flex-1 items-center gap-2 pr-1 cursor-pointer group sm:gap-3 sm:pr-0"
+            className="flex min-w-0 flex-1 items-center gap-1 pr-1 cursor-pointer group sm:gap-3 sm:pr-0"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden">
+            <div className="h-12 w-12 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden sm:h-16 sm:w-16">
               <img
                 src="/kalasetu-logo.jpeg"
                 alt="KalaSetu logo"
@@ -92,9 +92,9 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
                 loading="eager"
               />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="flex min-w-0 items-center gap-1.5">
-                <span className="truncate font-serif text-xl font-extrabold tracking-tight text-terracotta-700 sm:text-2xl">
+                <span className="shrink-0 whitespace-nowrap font-serif text-lg font-extrabold tracking-tight text-terracotta-700 sm:text-2xl">
                   {lang === 'hi' ? 'कला सेतु' : 'KalaSetu'}
                 </span>
                 <span className={`hidden text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border sm:inline-flex ${
@@ -206,7 +206,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="ml-2 flex shrink-0 items-center gap-2 sm:ml-auto sm:gap-3">
+          <div className="ml-1 flex shrink-0 items-center gap-1 sm:ml-auto sm:gap-3">
             
             {/* Wishlist Icon with badge */}
             <button
