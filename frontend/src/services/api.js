@@ -1,10 +1,9 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const getHeaders = (isFormData = false) => {
-  const token = localStorage.getItem('kalasetu_token') || 'demo_token';
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
+  const token = localStorage.getItem('kalasetu_token');
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
   if (!isFormData) {
     headers['Content-Type'] = 'application/json';
   }

@@ -42,12 +42,14 @@ const DEMO_BUYER = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('kalasetu_user');
-    return saved ? JSON.parse(saved) : DEMO_ARTISAN;
-  });
-  const [token, setToken] = useState(() => localStorage.getItem('kalasetu_token') || 'demo_token');
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    localStorage.removeItem('kalasetu_user');
+    localStorage.removeItem('kalasetu_token');
+  }, []);
 
   useEffect(() => {
     if (user) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -41,16 +41,22 @@ import {
 
 function MainApp() {
   const { lang, t } = useLanguage();
-  const { isArtisan } = useAuth();
+  const { user, isArtisan } = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
   const { favCount } = useFavourite();
 
-  const [currentTab, setCurrentTab] = useState(isArtisan ? 'dashboard' : 'marketplace');
+  const [currentTab, setCurrentTab] = useState('login');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedArtisanId, setSelectedArtisanId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
   const [pendingDraft, setPendingDraft] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
+
+  useEffect(() => {
+    if (!user && currentTab !== 'login' && currentTab !== 'register') {
+      setCurrentTab('login');
+    }
+  }, [currentTab, user]);
 
   const goToTab = (tab, options = {}) => {
     if ('capturedImage' in options) {

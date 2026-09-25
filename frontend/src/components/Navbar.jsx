@@ -3,7 +3,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useFavourite } from '../context/FavouriteContext';
-import { BrandLogo } from './BrandLogo';
 import {
   Sparkles,
   Languages,
@@ -78,15 +77,20 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-terracotta-100 shadow-sm">
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center justify-between gap-2 py-2 sm:gap-4">
+        <div className="flex min-w-0 items-center justify-between gap-3 py-2 sm:gap-4">
           
           {/* Logo & Brand */}
           <div 
             onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
-            className="flex min-w-0 items-center gap-2 cursor-pointer group sm:gap-3"
+            className="flex min-w-0 flex-1 items-center gap-2 pr-1 cursor-pointer group sm:gap-3 sm:pr-0"
           >
             <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden">
-              <BrandLogo className="w-full h-full object-contain" alt="KalaSetu logo" />
+              <img
+                src="/kalasetu-logo.jpeg"
+                alt="KalaSetu logo"
+                className="w-full h-full object-contain"
+                loading="eager"
+              />
             </div>
             <div className="min-w-0">
               <div className="flex min-w-0 items-center gap-1.5">
@@ -202,13 +206,13 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-3">
+          <div className="ml-2 flex shrink-0 items-center gap-2 sm:ml-auto sm:gap-3">
             
             {/* Wishlist Icon with badge */}
             <button
               onClick={() => handleNavClick('favourites')}
               title={t('favourites')}
-              className={`p-2.5 rounded-full border transition flex items-center justify-center relative shadow-xs ${
+              className={`shrink-0 p-2.5 rounded-full border transition flex items-center justify-center relative shadow-xs ${
                 currentTab === 'favourites'
                   ? 'bg-red-50 border-red-300 text-red-600'
                   : 'bg-white border-gray-200 text-gray-700 hover:text-red-600 hover:bg-red-50'
@@ -226,7 +230,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
             <button
               onClick={() => setIsCartOpen(true)}
               title={t('cart')}
-              className="p-2.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition flex items-center justify-center relative shadow-xs"
+              className="shrink-0 p-2.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition flex items-center justify-center relative shadow-xs"
             >
               <ShoppingCart className="w-4 h-4 text-emerald-700" />
               {cartCount > 0 && (
@@ -240,7 +244,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
             <button
               onClick={readPageHelp}
               title="Voice Guide / बोलकर सुनें"
-              className="p-2.5 rounded-full bg-sandalwood-50 border border-sandalwood-200 text-sandalwood-800 hover:bg-sandalwood-100 transition flex items-center justify-center shadow-xs"
+              className="hidden shrink-0 p-2.5 rounded-full bg-sandalwood-50 border border-sandalwood-200 text-sandalwood-800 hover:bg-sandalwood-100 transition items-center justify-center shadow-xs sm:flex"
             >
               <Volume2 className="w-4 h-4 text-sandalwood-700" />
             </button>
@@ -248,7 +252,7 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-terracotta-50 border border-terracotta-200 text-terracotta-800 hover:bg-terracotta-100 font-bold text-xs transition shadow-xs"
+              className="hidden shrink-0 items-center gap-1.5 px-3 py-2 rounded-full bg-terracotta-50 border border-terracotta-200 text-terracotta-800 hover:bg-terracotta-100 font-bold text-xs transition shadow-xs sm:flex"
             >
               <Languages className="w-4 h-4 text-terracotta-600" />
               <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>

@@ -13,8 +13,8 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
   return (
     <footer className="mt-16 border-t border-terracotta-100 bg-gradient-to-br from-terracotta-700 via-terracotta-600 to-sandalwood-500 px-4 pb-6 pt-10 text-white shadow-[0_-4px_20px_rgba(200,90,50,0.15)]">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-6 md:gap-8 md:grid-cols-2 lg:grid-cols-5">
+          <div className="col-span-2 lg:col-span-2">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-xl shadow-sm shadow-terracotta-500/20">
                 🪔
@@ -25,11 +25,11 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
               </div>
             </div>
 
-            <p className="mt-4 max-w-md text-sm leading-7 text-terracotta-50">
+            <p className="mt-3 max-w-md text-sm leading-6 text-terracotta-50 sm:mt-4 sm:leading-7">
               Bridging traditional craftsmanship with digital opportunity, helping artisans present their work with clarity, confidence, and fairer market access.
             </p>
 
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-3">
               <button
                 type="button"
                 onClick={() => handleNavigate('about')}
@@ -49,7 +49,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Quick Links</h3>
-            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+            <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
               <li><button type="button" onClick={() => handleNavigate(homeTab)} className="transition hover:text-white">Home</button></li>
               <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">Marketplace</button></li>
               <li><button type="button" onClick={() => handleNavigate('about')} className="transition hover:text-white">About Us</button></li>
@@ -59,7 +59,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">For Artisans</h3>
-            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+            <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
               <li><button type="button" onClick={() => handleNavigate('add-product')} className="transition hover:text-white">Add Product</button></li>
               <li><button type="button" onClick={() => handleNavigate('dashboard')} className="transition hover:text-white">My Products</button></li>
               <li><button type="button" onClick={() => handleNavigate('catalog')} className="transition hover:text-white">AI Catalog Generator</button></li>
@@ -69,7 +69,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">For Buyers</h3>
-            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+            <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
               <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">Explore Products</button></li>
               <li><button type="button" onClick={() => handleNavigate('favourites')} className="transition hover:text-white">Favourites</button></li>
               <li><button type="button" onClick={() => handleNavigate('orders')} className="transition hover:text-white">Orders</button></li>
@@ -77,10 +77,10 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-5 border-t border-white/15 pt-6 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="mt-7 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-white/15 pt-5 md:mt-10 md:grid-cols-[1.2fr_0.8fr] md:gap-5 md:pt-6">
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Contact</h3>
-            <ul className="mt-4 space-y-3 text-sm text-terracotta-50/90">
+            <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 text-terracotta-100" />
                 <a href="mailto:radha.devi@kalasetu.org" className="transition hover:text-white">radha.devi@kalasetu.org</a>
@@ -98,14 +98,14 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
 
           <div className="md:text-right">
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Support</h3>
-            <div className="mt-4 flex items-center justify-start gap-2 text-sm text-terracotta-50/90 md:justify-end">
+            <div className="mt-3 flex items-center justify-start gap-2 text-sm text-terracotta-50/90 sm:mt-4 md:justify-end">
               <MessageSquareText className="h-4 w-4 text-terracotta-100" />
               <button type="button" onClick={() => handleNavigate('contact')} className="transition hover:text-white">Send feedback</button>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/15 pt-4 text-center text-xs text-terracotta-100">
+        <div className="mt-6 border-t border-white/15 pt-4 text-center text-xs text-terracotta-100 md:mt-8">
           © 2026 KalaSetu. All rights reserved.
         </div>
       </div>
