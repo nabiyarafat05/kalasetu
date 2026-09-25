@@ -63,19 +63,18 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">{isHindi ? 'कारीगरों के लिए' : 'For Artisans'}</h3>
             <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
-              <li><button type="button" onClick={() => handleNavigate('add-product')} className="transition hover:text-white">Add Product</button></li>
-              <li><button type="button" onClick={() => handleNavigate('dashboard')} className="transition hover:text-white">My Products</button></li>
-              <li><button type="button" onClick={() => handleNavigate('catalog')} className="transition hover:text-white">AI Catalog Generator</button></li>
-              <li><button type="button" onClick={() => handleNavigate('pricing')} className="transition hover:text-white">Price Suggestion</button></li>
+              <li><button type="button" onClick={() => handleNavigate('add-product')} className="transition hover:text-white">{isHindi ? 'उत्पाद जोड़ें' : 'Add Product'}</button></li>
+              <li><button type="button" onClick={() => handleNavigate('dashboard')} className="transition hover:text-white">{isHindi ? 'मेरे उत्पाद' : 'My Products'}</button></li>
+              <li><button type="button" onClick={() => handleNavigate('catalog')} className="transition hover:text-white">{isHindi ? 'एआई कैटलॉग जनरेटर' : 'AI Catalog Generator'}</button></li>
+              <li><button type="button" onClick={() => handleNavigate('pricing')} className="transition hover:text-white">{isHindi ? 'मूल्य सुझाव' : 'Price Suggestion'}</button></li>
             </ul>
           </div>
-
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">{isHindi ? 'खरीदारों के लिए' : 'For Buyers'}</h3>
             <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
-              <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">Explore Products</button></li>
-              <li><button type="button" onClick={() => handleNavigate('favourites')} className="transition hover:text-white">Favourites</button></li>
-              <li><button type="button" onClick={() => handleNavigate('orders')} className="transition hover:text-white">Orders</button></li>
+              <li><button type="button" onClick={() => handleNavigate('marketplace')} className="transition hover:text-white">{isHindi ? 'उत्पाद खोजें' : 'Explore Products'}</button></li>
+              <li><button type="button" onClick={() => handleNavigate('favourites')} className="transition hover:text-white">{isHindi ? 'पसंदीदा' : 'Favourites'}</button></li>
+              <li><button type="button" onClick={() => handleNavigate('orders')} className="transition hover:text-white">{isHindi ? 'ऑर्डर' : 'Orders'}</button></li>
             </ul>
           </div>
         </div>
@@ -94,7 +93,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 text-terracotta-100" />
-                <span>Lucknow, Uttar Pradesh, India</span>
+                <span>{isHindi ? 'लखनऊ, उत्तर प्रदेश, भारत' : 'Lucknow, Uttar Pradesh, India'}</span>
               </li>
             </ul>
           </div>
@@ -112,7 +111,6 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
           © 2026 KalaSetu. All rights reserved.
         </div>
       </div>
-
     </footer>
   );
 };
