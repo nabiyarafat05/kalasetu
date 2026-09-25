@@ -10,7 +10,7 @@ export const Login = ({ onNavigateToRegister, onLoginSuccess }) => {
   const { login, loginDemo, loading } = useAuth();
   const { addToast } = useToast();
 
-  const [email, setEmail] = useState('radha.devi@kalasetu.org');
+  const [email, setEmail] = useState('support@kalasetu.org');
   const [password, setPassword] = useState('demo_password_123');
   const [errors, setErrors] = useState({});
 

@@ -12,10 +12,8 @@ import {
 } from 'lucide-react';
 
 const WHATSAPP_CONFIG = {
-  number: '',
-  prefilledMessage: 'Hi KalaSetu, I need help with the platform.',
-  note: 'WhatsApp support is being configured. Add the official business number and credentials in the backend environment before enabling live routing.',
-  statusLabel: 'WhatsApp support is being configured.'
+  number: '919829012345',
+  prefilledMessage: 'Namaste! I have a question about Kala Setu.'
 };
 
 const quickQuestions = [
@@ -120,22 +118,6 @@ export const ContactUsPage = () => {
       ]);
       setIsTyping(false);
     }, 350);
-  };
-
-  const handleWhatsApp = () => {
-    const url = buildWhatsAppLink();
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-      return;
-    }
-    setMessages((current) => [
-      ...current,
-      {
-        id: Date.now(),
-        sender: 'assistant',
-        text: 'WhatsApp support is being configured. The team will enable the official business number once the credentials are added.'
-      }
-    ]);
   };
 
   return (
@@ -246,29 +228,23 @@ export const ContactUsPage = () => {
             Reach out to the KalaSetu team for additional support, partnership questions, or product guidance.
           </p>
 
-          <button
-            type="button"
-            onClick={handleWhatsApp}
-            disabled={!WHATSAPP_CONFIG.number}
-            className={`mt-5 flex w-full items-center justify-center gap-3 rounded-2xl px-4 py-4 text-base font-bold shadow-sm transition ${WHATSAPP_CONFIG.number ? 'bg-[#25D366] text-white hover:bg-[#1da851]' : 'cursor-not-allowed border border-amber-200 bg-amber-50 text-amber-800'}`}
+          <a
+            href={buildWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-4 py-4 text-base font-bold text-white shadow-sm transition hover:bg-[#1da851] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
           >
             <MessageCircleMore className="h-5 w-5" />
-            {WHATSAPP_CONFIG.number ? 'Chat with us on WhatsApp' : 'WhatsApp Assistant — Coming Soon'}
-            {WHATSAPP_CONFIG.number && <ArrowUpRight className="h-4 w-4" />}
-          </button>
-
-          {!WHATSAPP_CONFIG.number && (
-            <p className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-800">
-              {WHATSAPP_CONFIG.note}
-            </p>
-          )}
+            Chat with us on WhatsApp
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
 
           <div className="mt-6 space-y-3 border-t border-terracotta-100 pt-5">
             <div className="flex items-start gap-3 rounded-2xl bg-khadi p-3">
               <Mail className="mt-0.5 h-4 w-4 text-terracotta-700" />
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">Email</p>
-                <a href="mailto:radha.devi@kalasetu.org" className="mt-1 block text-sm text-terracotta-700 hover:text-terracotta-800">radha.devi@kalasetu.org</a>
+                <a href="mailto:support@kalasetu.org" className="mt-1 block text-sm text-terracotta-700 hover:text-terracotta-800">support@kalasetu.org</a>
               </div>
             </div>
 
@@ -284,7 +260,7 @@ export const ContactUsPage = () => {
               <MapPin className="mt-0.5 h-4 w-4 text-terracotta-700" />
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigoClay-900">Location</p>
-                <p className="mt-1 text-sm text-gray-700">Sanganer, Jaipur, Rajasthan</p>
+                <p className="mt-1 text-sm text-gray-700">Lucknow, Uttar Pradesh, India</p>
               </div>
             </div>
           </div>

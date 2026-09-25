@@ -83,7 +83,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
             <ul className="mt-3 space-y-2 text-sm text-terracotta-50/90 sm:mt-4 sm:space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 text-terracotta-100" />
-                <a href="mailto:radha.devi@kalasetu.org" className="transition hover:text-white">radha.devi@kalasetu.org</a>
+                <a href="mailto:support@kalasetu.org" className="transition hover:text-white">support@kalasetu.org</a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 text-terracotta-100" />
@@ -91,7 +91,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 text-terracotta-100" />
-                <span>Sanganer, Jaipur, Rajasthan</span>
+                <span>Lucknow, Uttar Pradesh, India</span>
               </li>
             </ul>
           </div>
@@ -100,7 +100,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
             <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-terracotta-50">Support</h3>
             <div className="mt-3 flex items-center justify-start gap-2 text-sm text-terracotta-50/90 sm:mt-4 md:justify-end">
               <MessageSquareText className="h-4 w-4 text-terracotta-100" />
-              <button type="button" onClick={() => handleNavigate('contact')} className="transition hover:text-white">Send feedback</button>
+              <a href="mailto:support@kalasetu.org?subject=Kala%20Setu%20Feedback%20/%20Support" className="transition hover:text-white">Send feedback</a>
             </div>
           </div>
         </div>
@@ -109,6 +109,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
           © 2026 KalaSetu. All rights reserved.
         </div>
       </div>
+
     </footer>
   );
 };
