@@ -1,10 +1,10 @@
 export const translations = {
   en: {
-    appName: 'KalaSetu',
-    tagline: 'Bridging Indian Artisans to the Global Market',
+    appName: 'Kalyan Setu',
+    tagline: 'Unified scholarship support for tribal students',
     welcome: 'Namaste',
-    dashboard: 'Artisan Dashboard',
-    marketplace: 'Artisan Marketplace',
+    dashboard: 'Dashboard',
+    marketplace: 'Verification',
     marketplaceSub: 'Direct from India’s Master Craftspersons to Your Home',
     myProducts: 'My Products',
     addProduct: 'Add New Product',
@@ -137,11 +137,11 @@ export const translations = {
     directArtisanDirectMessage: 'Direct Artisan Connect'
   },
   hi: {
-    appName: 'कला सेतु',
-    tagline: 'भारतीय कारीगरों को वैश्विक बाजार से जोड़ने वाला सेतु',
+    appName: 'कल्याण सेतु',
+    tagline: 'जनजातीय छात्रों के लिए Unified स्कॉलरशिप समर्थन',
     welcome: 'नमस्ते',
-    dashboard: 'कारीगर डैशबोर्ड',
-    marketplace: 'कारीगर हाट / बाजार',
+    dashboard: 'डैशबोर्ड',
+    marketplace: 'सत्यापन',
     marketplaceSub: 'भारत के कुशल कारीगरों के हाथों से सीधे आपके घर तक',
     myProducts: 'मेरे हस्तशिल्प उत्पाद',
     addProduct: 'नया उत्पाद जोड़ें',

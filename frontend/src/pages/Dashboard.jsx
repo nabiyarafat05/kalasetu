@@ -1,435 +1,193 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { useAuth } from '../context/AuthContext';
-import { useToast } from '../context/ToastContext';
-import { api } from '../services/api';
-import { ProductCard } from '../components/ProductCard';
-import { CaptureModal } from '../components/CaptureModal';
 import {
-  Camera,
-  Wand2,
-  Coins,
-  Plus,
-  Sparkles,
-  ShoppingBag,
-  TrendingUp,
-  Search,
-  SlidersHorizontal,
+  ArrowRight,
+  Banknote,
+  BellRing,
   CheckCircle2,
-  Package,
-  Layers,
-  Image as ImageIcon,
-  PackageCheck,
-  Store,
-  ChevronRight
+  FileText,
+  GraduationCap,
+  Landmark,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  WalletCards
 } from 'lucide-react';
 
-export const Dashboard = ({ onNavigate, onSelectProduct, onEditProduct }) => {
-  const { lang, t } = useLanguage();
-  const { user } = useAuth();
-  const { addToast } = useToast();
+export const Dashboard = () => {
+  const { lang } = useLanguage();
 
-  const [products, setProducts] = useState([]);
-  const [incomingOrders, setIncomingOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [activeTab, setActiveTab] = useState('all'); // 'all', 'active', 'sold'
-  const [isCaptureModalOpen, setIsCaptureModalOpen] = useState(false);
-
-  const categories = [
-    'All',
-    'Pottery & Ceramics',
-    'Textiles & Handloom',
-    'Woodwork & Carvings',
-    'Paintings & Folk Art',
-    'Metalcraft & Brass',
-    'Jewelry & Beads'
+  const scholarships = [
+    {
+      title: 'Pre-Matric Scholarship for ST Students',
+      status: 'Verified',
+      amount: '₹12,000',
+      tag: 'Student Support',
+      accent: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      note: 'Tuition and maintenance support for school students',
+      icon: GraduationCap
+    },
+    {
+      title: 'Post-Matric Scholarship for ST',
+      status: 'Pending Verification',
+      amount: '₹25,000',
+      tag: 'Application in progress',
+      accent: 'bg-amber-50 text-amber-700 border-amber-200',
+      note: 'Academic fee and hostel support for higher education',
+      icon: WalletCards
+    },
+    {
+      title: 'National Overseas Scholarship',
+      status: 'Not Applied',
+      amount: '₹10,00,000',
+      tag: 'Career path',
+      accent: 'bg-sky-50 text-sky-700 border-sky-200',
+      note: 'Full funding for international higher studies',
+      icon: Landmark
+    }
   ];
 
-  const fetchDashboardData = async () => {
-    setLoading(true);
-    try {
-      const [prodRes, orderRes] = await Promise.all([
-        api.products.getAll({ artisanId: user?.id || user?._id }),
-        api.orders.getArtisanOrders()
-      ]);
+  const quickStats = [
+    { label: 'Eligibility Score', value: '92%', icon: TrendingUp },
+    { label: 'Documents Verified', value: '4/5', icon: ShieldCheck },
+    { label: 'Next Disbursement', value: 'Nov 2026', icon: Banknote }
+  ];
 
-      if (prodRes.data?.success) {
-        setProducts(prodRes.data.data);
-      }
-      if (orderRes.data?.success) {
-        setIncomingOrders(orderRes.data.data);
-      }
-    } catch (error) {
-      console.error('Failed to load dashboard:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, [user]);
-
-  const handleToggleStatus = async (productId) => {
-    try {
-      const res = await api.products.toggleStatus(productId);
-      if (res.data?.success) {
-        addToast(res.data.message, 'success');
-        fetchDashboardData();
-      }
-    } catch (error) {
-      addToast('Failed to update product status', 'error');
-    }
-  };
-
-  const handleCaptureProceed = (capturedImage) => {
-    setIsCaptureModalOpen(false);
-    onNavigate('add-product', { capturedImage });
-  };
-
-  // Filter products
-  const filteredProducts = products.filter((p) => {
-    const matchesTab = activeTab === 'all' || p.status === activeTab;
-    const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
-    const s = searchTerm.toLowerCase();
-    const matchesSearch =
-      !searchTerm ||
-      p.name?.toLowerCase().includes(s) ||
-      p.description?.toLowerCase().includes(s) ||
-      p.craftType?.toLowerCase().includes(s) ||
-      p.location?.toLowerCase().includes(s);
-
-    return matchesTab && matchesCategory && matchesSearch;
-  });
-
-  // Calculate stats
-  const totalCount = products.length;
-  const activeCount = products.filter((p) => p.status === 'active').length;
-  const soldCount = products.filter((p) => p.status === 'sold').length;
-  const totalRevenue = products.reduce((acc, curr) => acc + (curr.price || 0), 0);
-  const pendingOrdersCount = incomingOrders.filter(o => o.orderStatus !== 'delivered' && o.orderStatus !== 'cancelled').length;
+  const checklist = [
+    'ST certificate fetched from DigiLocker',
+    'Income certificate status confirmed',
+    'Aadhaar and bank linkage complete',
+    'Academic record uploaded'
+  ];
 
   return (
     <div className="min-w-0 max-w-full space-y-8 overflow-x-hidden animate-fadeIn">
-      
-      {/* 1. Artisan Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-terracotta-700 via-terracotta-600 to-sandalwood-500 text-white p-6 sm:p-8 shadow-xl">
-        <div className="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
-        <div className="absolute right-8 top-2 text-white/10 pointer-events-none select-none flex items-center justify-center w-40 h-40">
-          <img src="/kalasetu-logo.jpeg" alt="KalaSetu logo" className="w-full h-full object-contain opacity-30" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-700 via-terracotta-600 to-sandalwood-500 text-white p-6 sm:p-8 shadow-xl">
+        <div className="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none" />
+        <div className="absolute right-5 top-4 text-white/10 pointer-events-none select-none flex items-center justify-center w-32 h-32">
+          <img src="/kalasetu-logo.jpeg" alt="Kalyan Setu logo" className="w-full h-full object-contain opacity-30" />
         </div>
 
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold mb-3 border border-white/30 text-white">
-            <Sparkles className="w-3.5 h-3.5 text-sandalwood-300" />
-            <span>{lang === 'hi' ? 'एआई डिजिटल कारीगर प्लेटफॉर्म' : 'AI-Powered Digital Artisan Hub'}</span>
+        <div className="relative z-10 max-w-3xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] backdrop-blur-sm">
+            <Sparkles className="h-3.5 w-3.5 text-amber-200" />
+            <span>{lang === 'hi' ? 'जनजातीय छात्र सहायता प्लेटफ़ॉर्म' : 'Tribal Student Support Platform'}</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold font-serif tracking-tight text-white leading-tight">
-            {t('welcome')}, {user?.name || 'Radha Devi'} 🙏
+          <h1 className="mt-4 text-2xl font-extrabold font-serif tracking-tight text-white sm:text-4xl">
+            {lang === 'hi' ? 'नमस्ते, ज्योति' : 'Welcome back, Jyoti'}
           </h1>
 
-          <p className="mt-2 text-sm sm:text-base text-terracotta-100 font-medium leading-relaxed">
+          <p className="mt-2 max-w-xl text-sm text-emerald-50 sm:text-base">
             {lang === 'hi'
-              ? `${user?.location || 'जयपुर'} के आपके पारंपरिक ${user?.craftSpecialty || 'हस्तशिल्प'} को दुनिया भर के ग्राहकों तक पहुँचाने के लिए आपका स्वागत है।`
-              : `Digitize your handcrafted heritage from ${user?.location || 'Jaipur, Rajasthan'}, enhance your craft photography, and reach conscious buyers worldwide.`}
+              ? 'आपका Unified छात्र स्कॉलरशिप डैशबोर्ड तैयार है। DigiLocker प्रमाणपत्र, आवेदन स्थिति और दिशा-निर्देश एक ही जगह देखें।'
+              : 'Your unified scholarship dashboard is ready. Track DigiLocker verification, application status, and next-step guidance in one place.'}
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-            <span className="bg-black/25 backdrop-blur-md px-3 py-1 rounded-full font-semibold border border-white/20">
-              📍 {user?.location || 'Jaipur, Rajasthan'}
-            </span>
-            <span className="bg-black/25 backdrop-blur-md px-3 py-1 rounded-full font-semibold border border-white/20">
-              🎨 {user?.craftSpecialty || 'Traditional Indian Handicrafts'}
-            </span>
+            <span className="rounded-full border border-white/20 bg-black/15 px-3 py-1 font-semibold">📍 Bastar, Chhattisgarh</span>
+            <span className="rounded-full border border-white/20 bg-black/15 px-3 py-1 font-semibold">🎓 B.Tech — 1st Year</span>
           </div>
         </div>
       </div>
 
-      {/* 2. Incoming Orders Alert Banner (If orders exist) */}
-      {incomingOrders.length > 0 && (
-        <div
-          onClick={() => onNavigate('orders')}
-          className="p-5 rounded-3xl bg-emerald-50 border border-emerald-300 shadow-sm cursor-pointer hover:bg-emerald-100/80 transition flex flex-col sm:flex-row items-center justify-between gap-4"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md">
-              <PackageCheck className="w-6 h-6" />
+      <div className="grid gap-4 md:grid-cols-3">
+        {quickStats.map(({ label, value, icon: Icon }) => (
+          <div key={label} className="rounded-2xl border border-terracotta-100 bg-white p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{label}</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-terracotta-50 text-terracotta-700">
+                <Icon className="h-5 w-5" />
+              </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-bold text-sm sm:text-base text-emerald-950">
-                  {lang === 'hi' ? `आपके पास ${pendingOrdersCount} नए खरीद अनुरोध हैं!` : `You have ${pendingOrdersCount} customer orders to fulfill!`}
-                </h3>
-                <span className="bg-emerald-200 text-emerald-900 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  Live Orders
+            <p className="mt-4 text-2xl font-extrabold text-indigoClay-900">{value}</p>
+          </div>
+        ))}
+      </div>
+
+      <section className="space-y-4">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-xl font-bold text-indigoClay-900">{lang === 'hi' ? 'स्कॉलरशिप योजनाएँ' : 'Scholarship Schemes'}</h2>
+          <button className="inline-flex items-center gap-2 rounded-full bg-terracotta-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-terracotta-700">
+            {lang === 'hi' ? 'सब्सिडी खोजें' : 'Explore schemes'}
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-3">
+          {scholarships.map(({ title, status, amount, tag, accent, note, icon: Icon }) => (
+            <div key={title} className="rounded-[28px] border border-terracotta-100 bg-white p-5 shadow-sm">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-terracotta-50 text-terracotta-700">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className={`rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${accent}`}>
+                  {status}
                 </span>
               </div>
-              <p className="text-xs text-emerald-800 mt-0.5">
-                {lang === 'hi' ? 'ऑर्डर विवरण देखने और निर्माण स्थिति अपडेट करने के लिए टैप करें' : 'Tap to view customer delivery details and update crafting status'}
-              </p>
-            </div>
-          </div>
 
-          <span className="text-xs font-bold text-emerald-900 flex items-center gap-1">
-            <span>{t('incomingOrders')}</span>
-            <ChevronRight className="w-4 h-4" />
-          </span>
+              <h3 className="mt-5 text-lg font-bold text-indigoClay-900">{title}</h3>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-gray-500">{tag}</p>
+
+              <div className="mt-4 flex items-end justify-between gap-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.18em] text-gray-500">Amount</p>
+                  <p className="text-2xl font-extrabold text-terracotta-700">{amount}</p>
+                </div>
+                <div className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">{lang === 'hi' ? 'लाभ योग्य' : 'Eligible'}</div>
+              </div>
+
+              <p className="mt-3 text-sm leading-6 text-gray-600">{note}</p>
+            </div>
+          ))}
         </div>
-      )}
+      </section>
 
-      {/* 3. Quick Action Tiles */}
-      <div>
-        <h2 className="text-base sm:text-lg font-bold text-indigoClay-900 mb-3 flex items-center gap-2">
-          <Layers className="w-5 h-5 text-terracotta-600" />
-          <span>{t('quickActions')}</span>
-        </h2>
-
-        <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-          
-          {/* Tile 1: Capture Product */}
-          <button
-            onClick={() => setIsCaptureModalOpen(true)}
-            className="group p-4 rounded-2xl bg-white border border-terracotta-100 shadow-sm hover:shadow-craft-hover hover:border-terracotta-400 transition-all text-left flex flex-col justify-between"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-terracotta-50 text-terracotta-600 flex items-center justify-center group-hover:scale-110 transition">
-              <Camera className="w-6 h-6" />
-            </div>
-            <div className="mt-3">
-              <h3 className="font-bold text-sm text-indigoClay-900 group-hover:text-terracotta-600 transition">
-                {t('captureProduct')}
-              </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">Instant Camera</p>
-            </div>
-          </button>
-
-          {/* Tile 2: Create AI Catalog */}
-          <button
-            onClick={() => onNavigate('catalog')}
-            className="group p-4 rounded-2xl bg-white border border-terracotta-100 shadow-sm hover:shadow-craft-hover hover:border-terracotta-400 transition-all text-left flex flex-col justify-between"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-sandalwood-50 text-sandalwood-600 flex items-center justify-center group-hover:scale-110 transition">
-              <Wand2 className="w-6 h-6" />
-            </div>
-            <div className="mt-3">
-              <h3 className="font-bold text-sm text-indigoClay-900 group-hover:text-terracotta-600 transition">
-                {t('createCatalog')}
-              </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">EN & हिन्दी Voice</p>
-            </div>
-          </button>
-
-          {/* Tile 3: AI Price Suggest */}
-          <button
-            onClick={() => onNavigate('pricing')}
-            className="group p-4 rounded-2xl bg-white border border-terracotta-100 shadow-sm hover:shadow-craft-hover hover:border-terracotta-400 transition-all text-left flex flex-col justify-between"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition">
-              <Coins className="w-6 h-6" />
-            </div>
-            <div className="mt-3">
-              <h3 className="font-bold text-sm text-indigoClay-900 group-hover:text-terracotta-600 transition">
-                {t('priceSuggest')}
-              </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">Fair Living Wage</p>
-            </div>
-          </button>
-
-          {/* Tile 4: AI Image Enhancer */}
-          <button
-            onClick={() => onNavigate('enhancer')}
-            className="group p-4 rounded-2xl bg-white border border-terracotta-100 shadow-sm hover:shadow-craft-hover hover:border-terracotta-400 transition-all text-left flex flex-col justify-between"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-indigoClay-50 text-indigoClay-600 flex items-center justify-center group-hover:scale-110 transition">
-              <ImageIcon className="w-6 h-6" />
-            </div>
-            <div className="mt-3">
-              <h3 className="font-bold text-sm text-indigoClay-900 group-hover:text-terracotta-600 transition">
-                {t('enhanceImage')}
-              </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">Studio Lighting</p>
-            </div>
-          </button>
-
-          {/* Tile 5: Add New Product */}
-          <button
-            onClick={() => onNavigate('add-product')}
-            className="col-span-2 sm:col-span-1 p-4 rounded-2xl bg-gradient-to-br from-terracotta-600 to-terracotta-700 text-white shadow-md hover:shadow-lg transition-all text-left flex flex-col justify-between"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center">
-              <Plus className="w-6 h-6 text-white" />
-            </div>
-            <div className="mt-3">
-              <h3 className="font-bold text-sm text-white">
-                {t('addProduct')}
-              </h3>
-              <p className="text-[11px] text-terracotta-100 mt-0.5">Publish Craft</p>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* 4. Stats Cards */}
-      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-4 sm:gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-terracotta-100 shadow-sm">
-          <div className="flex items-center justify-between text-gray-500 text-xs font-semibold">
-            <span>{t('statsTotal')}</span>
-            <Package className="w-4 h-4 text-terracotta-500" />
-          </div>
-          <p className="text-2xl font-extrabold text-indigoClay-900 mt-2">{totalCount}</p>
-          <span className="text-[11px] text-gray-400 mt-0.5 block">Handcrafted items</span>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-terracotta-100 shadow-sm">
-          <div className="flex items-center justify-between text-gray-500 text-xs font-semibold">
-            <span>{t('statsActive')}</span>
-            <ShoppingBag className="w-4 h-4 text-emerald-600" />
-          </div>
-          <p className="text-2xl font-extrabold text-emerald-700 mt-2">{activeCount}</p>
-          <span className="text-[11px] text-emerald-600 font-semibold mt-0.5 block">Live in Marketplace</span>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-terracotta-100 shadow-sm">
-          <div className="flex items-center justify-between text-gray-500 text-xs font-semibold">
-            <span>{t('statsSold')}</span>
-            <CheckCircle2 className="w-4 h-4 text-sandalwood-600" />
-          </div>
-          <p className="text-2xl font-extrabold text-sandalwood-800 mt-2">{soldCount}</p>
-          <span className="text-[11px] text-gray-400 mt-0.5 block">Completed sales</span>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-terracotta-100 shadow-sm">
-          <div className="flex items-center justify-between text-gray-500 text-xs font-semibold">
-            <span>{t('statsRevenue')}</span>
-            <TrendingUp className="w-4 h-4 text-terracotta-600" />
-          </div>
-          <p className="text-2xl font-extrabold text-terracotta-700 mt-2">
-            ₹{totalRevenue.toLocaleString('en-IN')}
-          </p>
-          <span className="text-[11px] text-gray-400 mt-0.5 block">Catalog valuation</span>
-        </div>
-      </div>
-
-      {/* 5. Products Section */}
-      <div className="space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-indigoClay-900 font-serif">
-              {t('myProducts')}
-            </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              {lang === 'hi' ? 'अपने सभी हस्तशिल्प उत्पादों को प्रबंधित करें' : 'Manage, edit and showcase your digital artisan inventory'}
-            </p>
+      <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-[28px] border border-terracotta-100 bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-bold text-indigoClay-900">{lang === 'hi' ? 'सत्यापन checklist' : 'Verification Checklist'}</h2>
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Ready
+            </span>
           </div>
 
-          <div className="relative max-w-md w-full">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={t('searchPlaceholder')}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-terracotta-200 text-xs sm:text-sm text-indigoClay-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-terracotta-500 shadow-xs"
-            />
-          </div>
-        </div>
-
-        {/* Filter Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-gray-200">
-          <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-gray-200 shadow-xs text-xs font-semibold">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === 'all' ? 'bg-terracotta-600 text-white' : 'text-gray-600 hover:text-terracotta-600'
-              }`}
-            >
-              {t('allProducts')} ({totalCount})
-            </button>
-            <button
-              onClick={() => setActiveTab('active')}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === 'active' ? 'bg-terracotta-600 text-white' : 'text-gray-600 hover:text-terracotta-600'
-              }`}
-            >
-              {t('activeProducts')} ({activeCount})
-            </button>
-            <button
-              onClick={() => setActiveTab('sold')}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === 'sold' ? 'bg-terracotta-600 text-white' : 'text-gray-600 hover:text-terracotta-600'
-              }`}
-            >
-              {t('soldProducts')} ({soldCount})
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-gray-400" />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-white border border-gray-200 text-xs sm:text-sm rounded-xl px-3 py-2 text-indigoClay-900 font-medium focus:outline-none focus:ring-2 focus:ring-terracotta-500 shadow-xs cursor-pointer"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Product Cards Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="bg-white rounded-2xl p-4 border border-gray-100 animate-pulse space-y-4">
-                <div className="aspect-square bg-gray-200 rounded-xl"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="mt-4 space-y-3">
+            {checklist.map((item) => (
+              <div key={item} className="flex items-center gap-3 rounded-2xl bg-emerald-50 px-3 py-3 text-sm text-emerald-900">
+                <CheckCircle2 className="h-4 w-4 flex-none text-emerald-600" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        ) : filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id || product._id}
-                product={product}
-                onViewDetails={onSelectProduct}
-                onEdit={onEditProduct}
-                onToggleStatus={handleToggleStatus}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-terracotta-200 p-8 shadow-xs">
-            <div className="w-16 h-16 rounded-full bg-terracotta-50 text-terracotta-600 mx-auto flex items-center justify-center mb-4">
-              <Package className="w-8 h-8" />
+        </div>
+
+        <div className="rounded-[28px] border border-terracotta-100 bg-gradient-to-br from-sky-50 to-white p-5 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
+              <BellRing className="h-5 w-5" />
             </div>
-            <h3 className="font-bold text-lg text-indigoClay-900">{t('noProductsFound')}</h3>
-            <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
-              {t('createFirstProduct')}
-            </p>
-            <button
-              onClick={() => onNavigate('add-product')}
-              className="mt-5 px-6 py-2.5 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-bold text-xs sm:text-sm shadow-md transition inline-flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              <span>{t('addProduct')}</span>
+            <div>
+              <h2 className="text-lg font-bold text-indigoClay-900">{lang === 'hi' ? 'अगला कदम' : 'Next Step'}</h2>
+              <p className="text-xs uppercase tracking-[0.14em] text-gray-500">{lang === 'hi' ? 'सत्यापन लंबित' : 'Verification pending'}</p>
+            </div>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            <div className="flex items-start gap-3 rounded-2xl bg-white p-3 shadow-sm">
+              <FileText className="mt-1 h-4 w-4 text-terracotta-600" />
+              <div>
+                <p className="text-sm font-bold text-indigoClay-900">{lang === 'hi' ? 'Post-Matric आवेदन को सत्यापित करें' : 'Verify the Post-Matric application'}</p>
+                <p className="text-xs text-gray-500">{lang === 'hi' ? 'आवश्यक दस्तावेज़ और आय प्रमाणपत्र अभी अपलोड कीजिए।' : 'Upload required documents and proof of income to continue.'}</p>
+              </div>
+            </div>
+            <button className="w-full rounded-2xl bg-indigoClay-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-indigoClay-800">
+              {lang === 'hi' ? 'DigiLocker सत्यापन शुरू करें' : 'Start DigiLocker verification'}
             </button>
           </div>
-        )}
-      </div>
-
-      {/* Capture Modal */}
-      {isCaptureModalOpen && (
-        <CaptureModal
-          onClose={() => setIsCaptureModalOpen(false)}
-          onProceedToProduct={handleCaptureProceed}
-        />
-      )}
+        </div>
+      </section>
     </div>
   );
 };

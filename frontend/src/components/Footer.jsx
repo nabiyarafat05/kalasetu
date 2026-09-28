@@ -23,13 +23,13 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
                 🪔
               </div>
               <div>
-                <p className="font-serif text-2xl font-extrabold tracking-tight text-white">KALASETU</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-terracotta-100">{isHindi ? 'डिजिटल अवसरों की रचना' : 'Crafting digital opportunity'}</p>
+                <p className="font-serif text-2xl font-extrabold tracking-tight text-white">KALYAN SETU</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-terracotta-100">{isHindi ? 'कल्याण और अवसरों की संधि' : 'Scholarship access and trust'}</p>
               </div>
             </div>
 
             <p className="mt-3 max-w-md text-sm leading-6 text-terracotta-50 sm:mt-4 sm:leading-7">
-              {isHindi ? 'पारंपरिक कारीगरी को डिजिटल अवसरों से जोड़कर कारीगरों को अपना काम बेहतर ढंग से प्रस्तुत करने और उचित बाजार तक पहुंचने में सहायता।' : 'Bridging traditional craftsmanship with digital opportunity, helping artisans present their work with clarity, confidence, and fairer market access.'}
+              {isHindi ? 'कल्याण सेतु जनजातीय छात्रों को योजना पात्रता, डिजीलॉकर सत्यापन और AI सहायक सहायता के माध्यम से शिक्षा और स्कॉलरशिप सहायता तक आसान पहुँच प्रदान करता है।' : 'Kalyan Setu helps tribal students access scholarships, authenticate documents via DigiLocker, and get multilingual guidance through a trusted digital support experience.'}
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-3">
@@ -108,7 +108,7 @@ export const Footer = ({ currentTab, setCurrentTab, isArtisan }) => {
         </div>
 
         <div className="mt-6 border-t border-white/15 pt-4 text-center text-xs text-terracotta-100 md:mt-8">
-          © 2026 KalaSetu. All rights reserved.
+          © 2026 Kalyan Setu. All rights reserved.
         </div>
       </div>
     </footer>

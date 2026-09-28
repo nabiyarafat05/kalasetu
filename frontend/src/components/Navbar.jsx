@@ -9,17 +9,13 @@ import {
   Volume2,
   User as UserIcon,
   LogOut,
-  PlusCircle,
-  Wand2,
-  Coins,
-  Image as ImageIcon,
-  Menu,
-  X,
   Home,
   ShoppingCart,
   Heart,
-  Store,
-  PackageCheck,
+  ShieldCheck,
+  MessageSquareText,
+  PanelLeft,
+  X,
   ChevronDown
 } from 'lucide-react';
 
@@ -61,27 +57,18 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
   const readPageHelp = () => {
     const helpMessages = {
-      dashboard: lang === 'hi' 
-        ? 'नमस्ते! यह आपका कला सेतु कारीगर डैशबोर्ड है। यहाँ आप उत्पाद जोड़ सकते हैं, एआई टूल्स चला सकते हैं और नए ऑर्डर देख सकते हैं।' 
-        : 'Welcome to your KalaSetu Artisan Dashboard. Manage your crafts, generate multilingual catalogs, and view customer orders.',
-      marketplace: lang === 'hi'
-        ? 'यह कला सेतु का हाट बाजार है। यहाँ आप भारत भर के उस्ताद कारीगरों के प्रामाणिक हस्तशिल्प देख और खरीद सकते हैं।'
-        : 'Welcome to the KalaSetu Artisan Marketplace. Browse authentic handcrafted products directly from master Indian artisans.',
-      catalog: lang === 'hi'
-        ? 'यहाँ आप बोलकर या लिखकर अपने शिल्प का अंग्रेजी और हिन्दी में सुंदर कैटलॉग बना सकते हैं।'
-        : 'Generate professional bilingual product descriptions in English and Hindi using AI.',
-      enhancer: lang === 'hi'
-        ? 'यहाँ अपने हस्तशिल्प की फोटो को स्टूडियो जैसा साफ और आकर्षक बनाएं।'
-        : 'Enhance your craft photos with studio lighting and clean backgrounds.',
-      pricing: lang === 'hi'
-        ? 'यहाँ अपने हस्तशिल्प का उचित मूल्य और अपनी मजदूरी का सही हिसाब लगाएं।'
-        : 'Calculate fair-trade living wage pricing for your handcrafted products.',
-      orders: lang === 'hi'
-        ? 'यहाँ अपने सभी ऑर्डर और डिलीवरी की स्थिति देखें।'
-        : 'Track your orders and purchase requests in real-time.'
+      dashboard: lang === 'hi'
+        ? 'नमस्ते! यह आपके लिए कल्याण सेतु छात्र पोर्टल है। यहाँ आप सब्सिडी योजनाओं, पात्रता स्थिति और लाभ की जानकारी आसानी से देख सकते हैं।'
+        : 'Welcome to Kalyan Setu. Here you can review your scholarship applications, eligibility status, and scheme benefits in one place.',
+      'document-upload': lang === 'hi'
+        ? 'यहाँ आप DigiLocker से ST/PVTG प्रमाणपत्र और आय प्रमाणपत्र को सुरक्षित रूप से सत्यापित कर सकते हैं।'
+        : 'Use this section to verify ST/PVTG caste and income credentials from DigiLocker and secure document authentication.',
+      'jago-chatbot': lang === 'hi'
+        ? 'जागो एआई आपकी पात्रता, एप्लिकेशन स्थिति और दस्तावेज़ आवश्यकताओं के बारे में लिखित या ध्वनि भाषा में सहायता करता है।'
+        : 'JAGO AI helps students check eligibility, application status, and required documents using text or voice guidance.'
     };
 
-    speakText(helpMessages[currentTab] || helpMessages.marketplace);
+    speakText(helpMessages[currentTab] || helpMessages.dashboard);
   };
 
   return (
@@ -91,13 +78,13 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
 
           {/* Logo & Brand */}
           <div 
-            onClick={() => handleNavClick(isArtisan ? 'dashboard' : 'marketplace')} 
+            onClick={() => handleNavClick('dashboard')} 
             className="flex min-w-0 flex-1 items-center gap-1 pr-1 cursor-pointer group sm:gap-3 sm:pr-0"
           >
             <div className="h-12 w-12 shrink-0 flex items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-terracotta-100 group-hover:scale-105 transition transform overflow-hidden sm:h-16 sm:w-16">
               <img
                 src="/kalasetu-logo.jpeg"
-                alt="KalaSetu logo"
+                alt="Kalyan Setu logo"
                 className="w-full h-full object-contain"
                 loading="eager"
               />
@@ -105,18 +92,14 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
             <div className="min-w-0 flex-1">
               <div className="flex min-w-0 items-center gap-1.5">
                 <span className="shrink-0 whitespace-nowrap font-serif text-lg font-extrabold tracking-tight text-terracotta-700 sm:text-2xl">
-                  {lang === 'hi' ? 'कला सेतु' : 'KalaSetu'}
+                  {lang === 'hi' ? 'कल्याण सेतु' : 'Kalyan Setu'}
                 </span>
-                <span className={`hidden text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border sm:inline-flex ${
-                  isArtisan
-                    ? 'bg-sandalwood-100 text-sandalwood-800 border-sandalwood-300'
-                    : 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                }`}>
-                  {isArtisan ? (lang === 'hi' ? 'कारीगर' : 'Artisan') : (lang === 'hi' ? 'हाट बाजार' : 'Marketplace')}
+                <span className="hidden text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border sm:inline-flex bg-emerald-100 text-emerald-800 border-emerald-300">
+                  {lang === 'hi' ? 'छात्र योजना' : 'Scholarship'}
                 </span>
               </div>
               <p className="text-[11px] text-gray-500 font-medium hidden sm:block">
-                {t('tagline')}
+                {lang === 'hi' ? 'अनुदान, प्रमाणपत्र और सहायता के लिए एक Unified पोर्टल' : 'Unified support for scholarships, verification, and student assistance'}
               </p>
             </div>
           </div>
@@ -124,90 +107,39 @@ export const Navbar = ({ currentTab, setCurrentTab }) => {
           {/* Desktop Navigation Tabs */}
           <nav className="hidden md:flex items-center gap-1.5 bg-khadi/70 p-1.5 rounded-full border border-terracotta-100/80">
             <button
-              onClick={() => handleNavClick('marketplace')}
+              onClick={() => handleNavClick('dashboard')}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                currentTab === 'marketplace'
+                currentTab === 'dashboard'
                   ? 'bg-terracotta-600 text-white shadow-sm'
                   : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
               }`}
             >
-              <Store className="w-4 h-4 text-sandalwood-500" />
-              {t('marketplace')}
+              <Home className="w-4 h-4" />
+              {lang === 'hi' ? 'डैशबोर्ड' : 'Dashboard'}
             </button>
-            {isArtisan && (
-              <>
-                <button
-                  onClick={() => handleNavClick('dashboard')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                    currentTab === 'dashboard'
-                      ? 'bg-terracotta-600 text-white shadow-sm'
-                      : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
-                  }`}
-                >
-                  <Home className="w-4 h-4" />
-                  {t('dashboard')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('add-product')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                    currentTab === 'add-product'
-                      ? 'bg-terracotta-600 text-white shadow-sm'
-                      : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
-                  }`}
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  {t('addProduct')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('catalog')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                    currentTab === 'catalog'
-                      ? 'bg-terracotta-600 text-white shadow-sm'
-                      : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
-                  }`}
-                >
-                  <Wand2 className="w-4 h-4 text-sandalwood-500" />
-                  {t('createCatalog')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('enhancer')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                    currentTab === 'enhancer'
-                      ? 'bg-terracotta-600 text-white shadow-sm'
-                      : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
-                  }`}
-                >
-                  <ImageIcon className="w-4 h-4 text-emerald-600" />
-                  {t('enhanceImage')}
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('pricing')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                    currentTab === 'pricing'
-                      ? 'bg-terracotta-600 text-white shadow-sm'
-                      : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
-                  }`}
-                >
-                  <Coins className="w-4 h-4 text-sandalwood-600" />
-                  {t('priceSuggest')}
-                </button>
-              </>
-            )}
 
             <button
-              onClick={() => handleNavClick('orders')}
+              onClick={() => handleNavClick('document-upload')}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
-                currentTab === 'orders'
+                currentTab === 'document-upload'
                   ? 'bg-terracotta-600 text-white shadow-sm'
                   : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
               }`}
             >
-              <PackageCheck className="w-4 h-4 text-emerald-600" />
-              {t('orders')}
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              {lang === 'hi' ? 'DigiLocker सत्यापन' : 'DigiLocker Verification'}
+            </button>
+
+            <button
+              onClick={() => handleNavClick('jago-chatbot')}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition ${
+                currentTab === 'jago-chatbot'
+                  ? 'bg-terracotta-600 text-white shadow-sm'
+                  : 'text-indigoClay-800 hover:text-terracotta-600 hover:bg-white/80'
+              }`}
+            >
+              <MessageSquareText className="w-4 h-4 text-sandalwood-600" />
+              {lang === 'hi' ? 'JAGO AI सहायक' : 'JAGO AI Assistant'}
             </button>
           </nav>
           {/* Right Action Icons */}

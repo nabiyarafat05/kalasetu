@@ -9,6 +9,8 @@ import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
 
 import { Dashboard } from './pages/Dashboard';
+import { DocumentUpload } from './pages/DocumentUpload';
+import { JagoChatbot } from './pages/JagoChatbot';
 import { MarketplaceHome } from './pages/MarketplaceHome';
 import { AddProduct } from './pages/AddProduct';
 import { ProductDetail } from './pages/ProductDetail';
@@ -45,7 +47,7 @@ function MainApp() {
   const { cartCount, setIsCartOpen } = useCart();
   const { favCount } = useFavourite();
 
-  const [currentTab, setCurrentTab] = useState('login');
+  const [currentTab, setCurrentTab] = useState('dashboard');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedArtisanId, setSelectedArtisanId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
@@ -130,6 +132,17 @@ function MainApp() {
       {/* Main Content View */}
       <main className="mx-auto flex w-full max-w-full min-w-0 flex-1 overflow-x-hidden px-4 pb-24 pt-6 sm:px-6 md:pb-12 lg:max-w-7xl lg:px-8">
         
+        {currentTab === 'dashboard' && (
+          <Dashboard
+            onNavigate={handleNavigate}
+            onSelectProduct={handleSelectArtisanProduct}
+            onEditProduct={handleEditProduct}
+          />
+        )}
+
+        {currentTab === 'document-upload' && <DocumentUpload />}
+        {currentTab === 'jago-chatbot' && <JagoChatbot />}
+
         {/* Marketplace Home (Buyer Discovery) */}
         {currentTab === 'marketplace' && (
           <MarketplaceHome
@@ -167,15 +180,6 @@ function MainApp() {
             artisanId={selectedArtisanId}
             onBack={() => setCurrentTab('marketplace')}
             onSelectProduct={handleSelectBuyerProduct}
-          />
-        )}
-
-        {/* Artisan Seller Dashboard */}
-        {currentTab === 'dashboard' && (
-          <Dashboard
-            onNavigate={handleNavigate}
-            onSelectProduct={handleSelectArtisanProduct}
-            onEditProduct={handleEditProduct}
           />
         )}
 
